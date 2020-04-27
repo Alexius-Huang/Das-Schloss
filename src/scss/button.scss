@@ -1,0 +1,66 @@
+button {
+  &.button-rect {
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
+    border-radius: .2rem;
+    transition: .25s;
+    box-shadow: 0 .3rem .3rem $night-1;
+    background-color: $frost-4;
+    color: $snow-1;
+
+    &:hover {
+      background-color: darken($frost-4, 5%);
+      box-shadow: 0 .5rem .5rem $night-1;
+    }
+
+    &:active {
+      transform: translateY(.3rem);
+      box-shadow: 0 .2rem .5rem $night-1;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: .6;
+    }
+  }
+
+  &.button-rect--success {
+    background-color: darken($aurora-green, 15%);
+    &:hover {
+      background-color: darken($aurora-green, 10%);
+    }
+  }
+
+  &.button-rect--warning {
+    background-color: darken($aurora-yellow, 25%);
+    &:hover {
+      background-color: darken($aurora-yellow, 20%);
+    }
+  }
+
+  &.button-rect--error {
+    background-color: $aurora-red;
+    &:hover {
+      background-color: darken($aurora-red, 5%);
+    }
+  }
+
+  &.button-rect--light {
+    background-color: $snow-1;
+    color: $night-1;
+    &:hover {
+      background-color: darken($snow-1, 5%);
+    }
+  }
+
+  &.button-rect--dark {
+    background-color: $night-1;
+    color: $snow-1;
+    &:hover {
+      background-color: lighten($night-1, 5%);
+    }
+  }
+}

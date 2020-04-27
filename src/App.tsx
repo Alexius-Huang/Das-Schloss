@@ -1,13 +1,24 @@
 import React from 'react';
-import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+import Index from './containers/Index';
+import Lessons from './containers/Lessons';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Ein Stern</h1>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/lessons">
+          <Lessons />
+        </Route>
+        <Route path="/">
+          <Index />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

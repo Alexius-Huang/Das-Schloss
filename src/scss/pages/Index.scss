@@ -1,0 +1,36 @@
+@import '../variables.scss';
+
+.page__index {
+  position: relative;
+  height: 100vh;
+}
+
+header.header {
+  display: inline-block;
+  text-align: center;
+  position: absolute;
+  height: auto;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -70%);
+
+  h1.header__title {
+    font-size: 4rem;
+  }
+
+  p.header__content {
+    margin-bottom: 2rem;
+  }
+
+  div.header__button-group {
+    text-align: center;
+    > button {
+      margin-top: 1rem;
+      margin-right: 1rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
