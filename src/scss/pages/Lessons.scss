@@ -1,0 +1,104 @@
+@import '../variables.scss';
+
+.page__lessons {
+  width: 96rem;
+  margin: 0 auto;
+  padding: 8rem 0 16rem 0;
+}
+
+.card-group {
+  background-color: transparentize($snow-1, .95);
+  padding: 2rem 3rem;
+
+  h1.card-group__title {
+    font-size: 2.8rem;
+    font-weight: 500;
+  }
+
+  h1.card-group__title > .react-icon {
+    color: $snow-1;
+    margin-right: .5rem;
+  }
+
+  & + .card-group {
+    margin-top: 3rem;
+  }
+}
+
+ul.card-group__cards {
+  text-align: center;
+  padding: 3rem 0 1rem 0;
+
+  > li.card {
+    display: inline-block;
+    width: 15rem;
+    > button.card__wrapper-button {
+      width: 100%;
+      background-color: transparent;
+
+      > span.card__img-wrapper {
+        display: block;
+        width: 66.6%;
+        height: 10rem;
+        border-radius: .5rem;
+        border: .1rem solid $night-2;
+        background-color: transparentize($night-1, .8);
+        margin: 0 auto 1rem auto;
+        transition: .25s;
+
+        > .react-icon {
+          width: 70%;
+          height: 70%;
+          margin-top: 15%;
+        }
+      }
+
+      > span.card__title {
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: white;
+      }
+    }
+
+    &.card > button.card__wrapper-button:hover > span.card__img-wrapper {
+      background-color: transparentize($night-1, .7);
+    }
+
+    &.card--conversation > button.card__wrapper-button {
+      & > span.card__img-wrapper > .react-icon {
+        color: lighten($aurora-green, 5%);
+      }
+
+      &:hover > span.card__img-wrapper {
+        box-shadow: 0 0 .3rem lighten($aurora-green, 5%);
+      }
+    }
+
+    &.card--vocabulary > button.card__wrapper-button {
+      & > span.card__img-wrapper > .react-icon {
+        color: $aurora-yellow;
+      }
+
+      &:hover > span.card__img-wrapper {
+        box-shadow: 0 0 .5rem $aurora-yellow;
+      }
+    }
+
+    &.card--grammer > button.card__wrapper-button {
+      & > span.card__img-wrapper > .react-icon {
+        color: $frost-2;
+      }
+
+      &:hover > span.card__img-wrapper {
+        box-shadow: 0 0 .3rem $frost-2;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 96rem) {
+  .page__lessons {
+    width: 90vw;
+  }  
+}

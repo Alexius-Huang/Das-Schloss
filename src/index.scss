@@ -29,11 +29,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 button {
+  cursor: pointer;
   border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+li {
+  list-style-type: none;
 }
 
 .page {
   animation: fade-in .25s ease-in;
+}
+
+.react-icon {
+  color: $snow-1;
 }
 
 @keyframes fade-in {
