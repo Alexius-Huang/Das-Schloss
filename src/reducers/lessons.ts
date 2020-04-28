@@ -14,7 +14,7 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
     case 'FETCH_LESSONS_START':
       return { ...state, fetchState: T.LessonFetchState.PROCESSING, error: null };
     case 'FETCH_LESSONS_SUCCESS':
-      return { ...state, fetchState: T.LessonFetchState.COMPLETED };
+      return { ...state, fetchState: T.LessonFetchState.COMPLETED, sections: action.payload };
     case 'FETCH_LESSONS_ERROR':
       return { ...state, fetchState: T.LessonFetchState.ERROR, error: action.payload };
     default:

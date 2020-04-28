@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../reducers';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../reducers';
+import { LessonFetchState } from '../reducers/lessons.type';
 import { FaGrinAlt, FaFlag, FaCheck } from 'react-icons/fa';
 import 'scss/pages/Lessons.scss';
+import { fetchLessonsStart } from '../actions/lessons';
 
 const Lessons: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const fetchState = useSelector((state: RootState) => state.Lessons.fetchState);
+  const lessons = useSelector((state: RootState) => state.Lessons.sections);
+  useEffect(() => {
+    if (fetchState === LessonFetchState.INCOMPLETE) {
+      dispatch(fetchLessonsStart());
+    }
+  });
 
   return (
     <div className="page page__lessons">

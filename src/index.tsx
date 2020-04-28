@@ -1,14 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { IconContext } from 'react-icons';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import RootReducer from './reducers';
-import * as serviceWorker from './serviceWorker';
 import App from './App';
+
+import reduxLogger from 'redux-logger';
+import { IconContext } from 'react-icons';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import createSagaMiddleware from 'redux-saga';
+
+import RootReducer from './reducers';
+import RootSaga from './saga';
+
+import * as serviceWorker from './serviceWorker';
 import './index.scss';
 
-const store = createStore(RootReducer);
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  RootReducer,
+  applyMiddleware(sagaMiddleware, reduxLogger)
+);
+
+sagaMiddleware.run(RootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
