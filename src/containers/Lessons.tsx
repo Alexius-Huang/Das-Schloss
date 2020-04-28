@@ -1,11 +1,11 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../reducers';
 import { FaGrinAlt, FaFlag, FaCheck } from 'react-icons/fa';
 import 'scss/pages/Lessons.scss';
 
 const Lessons: React.FC = () => {
-  const history = useHistory();
-
   return (
     <div className="page page__lessons">
       <div className="card-group">

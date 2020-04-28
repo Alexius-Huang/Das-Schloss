@@ -11,12 +11,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/lessons">
-          <Lessons />
-        </Route>
-        <Route path="/">
-          <Index />
-        </Route>
+        <Route path="/lessons" component={Lessons} />
+        <Route path="/" component={Index} />
       </Switch>
     </Router>
   );

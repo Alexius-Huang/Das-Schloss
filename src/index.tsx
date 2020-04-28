@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IconContext } from 'react-icons';
-import './index.scss';
-import App from './App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import RootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
+import App from './App';
+import './index.scss';
+
+const store = createStore(RootReducer);
 
 ReactDOM.render(
   <React.StrictMode>
-    <IconContext.Provider value={{ className: 'react-icon' }}>
-      <App />
-    </IconContext.Provider>
+    <Provider store={store}>
+      <IconContext.Provider value={{ className: 'react-icon' }}>
+        <App />
+      </IconContext.Provider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
