@@ -1,38 +1,22 @@
 import { LessonsAction } from '../actions/lessons.type';
+import * as T from './lessons.type';
 
-export enum LessonType {
-  Conversation = 1,
-  Vocabulary = 2,
-  Grammer = 3,
-}
-
-export type Lesson = {
-  id: number;
-  sectionId: number;
-  type: LessonType;
-  title: string;
-  icon: string;
+const defaultState: T.LessonsState = {
+  sections: [],
+  fetchState: T.LessonFetchState.INCOMPLETE,
+  error: null
 };
 
-export type Section = {
-  id: number;
-  title: string;
-  icon: string;
-  lessons: Lesson[];
-};
-
-export interface LessonsState {
-  sections: Section[];
-}
-
-const defaultState: LessonsState = {
-  sections: []
-};
-
-export default function (state = defaultState, action: LessonsAction) {
+export default function (state = defaultState, action: LessonsAction): T.LessonsState {
   switch (action.type) {
     case 'SET_SECTIONS':
       return { ...state, sections: action.payload };
+    case 'FETCH_LESSONS_START':
+      return { ...state, fetchState: T.LessonFetchState.PROCESSING, error: null };
+    case 'FETCH_LESSONS_SUCCESS':
+      return { ...state, fetchState: T.LessonFetchState.COMPLETED };
+    case 'FETCH_LESSONS_ERROR':
+      return { ...state, fetchState: T.LessonFetchState.ERROR, error: action.payload };
     default:
       return state;
   }

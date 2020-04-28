@@ -1,4 +1,5 @@
-import Lessons, { LessonsState } from './lessons';
+import { LessonsState } from './lessons.type';
+import Lessons from './lessons';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
