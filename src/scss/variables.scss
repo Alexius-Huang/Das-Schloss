@@ -21,7 +21,7 @@ $aurora-yellow: #ebcb8b;
 $aurora-green: #a3be8c;
 $aurora-purple: #b48ead;
 
-$bg-color: $night-4;
+$bg-color: darken($night-1, 10%);
 $font-color: $snow-3;
 $primary-black: $night-1;
 $primary-red: $aurora-red;

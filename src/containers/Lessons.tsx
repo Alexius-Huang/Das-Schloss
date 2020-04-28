@@ -1,15 +1,21 @@
 import React, { useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
+import CardGroup from '../components/CardGroup';
+import Card from '../components/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
-import { LessonFetchState } from '../reducers/lessons.type';
-import { FaGrinAlt, FaFlag, FaCheck } from 'react-icons/fa';
-import 'scss/pages/Lessons.scss';
+import { LessonFetchState, LessonType } from '../reducers/lessons.type';
 import { fetchLessonsStart } from '../actions/lessons';
+import 'scss/pages/Lessons.scss';
+
+const lessonTypeMap = new Map([
+  [LessonType.Conversation, 'conversation'],
+  [LessonType.Vocabulary, 'vocabulary'],
+  [LessonType.Grammer, 'grammer']
+]);
 
 const Lessons: React.FC = () => {
   const dispatch = useDispatch();
-
   const fetchState = useSelector((state: RootState) => state.Lessons.fetchState);
   const lessons = useSelector((state: RootState) => state.Lessons.sections);
   useEffect(() => {
@@ -20,51 +26,28 @@ const Lessons: React.FC = () => {
 
   return (
     <div className="page page__lessons">
-      <div className="card-group">
-        <h1 className="card-group__title"><FaFlag /> One Step Forward</h1>
-
-        <ul className="card-group__cards">
-          <li className="card card--conversation">
-            <button className="card__wrapper-button">
-              <span className="card__img-wrapper">
-                <FaGrinAlt />
-              </span>
-              <span className="card__title">Wilkommen!</span>
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <div className="card-group">
-        <h1 className="card-group__title"><FaCheck /> Fundamentals I</h1>
-
-        <ul className="card-group__cards">
-          <li className="card card--grammer">
-            <button className="card__wrapper-button">
-              <span className="card__img-wrapper">
-                <FaGrinAlt />
-              </span>
-              <span className="card__title">Personalpronomen</span>
-            </button>
-          </li>
-          <li className="card card--grammer">
-            <button className="card__wrapper-button">
-              <span className="card__img-wrapper">
-                <FaGrinAlt />
-              </span>
-              <span className="card__title">Das Nomen</span>
-            </button>
-          </li>
-          <li className="card card--grammer">
-            <button className="card__wrapper-button">
-              <span className="card__img-wrapper">
-                <FaGrinAlt />
-              </span>
-              <span className="card__title">Das Verb</span>
-            </button>
-          </li>
-        </ul>
-      </div>
+      {
+        lessons.map(section => (
+          <CardGroup
+            key={section.id}
+            title={section.title}
+            icon={section.icon}
+          >
+            <ul className="card-group__cards">
+              {
+                section.lessons.map(lesson => (
+                  <Card
+                    key={lesson.id}
+                    classnames={`card--${lessonTypeMap.get(lesson.type)}`}
+                    title={lesson.title}
+                    icon={lesson.icon}
+                  />
+                ))
+              }
+            </ul>
+          </CardGroup>
+        ))
+      }
     </div>
   );
 };

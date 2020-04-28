@@ -1,3 +1,5 @@
+import { AvailableIcons } from "../helpers/icons";
+
 export enum LessonType {
   Conversation = 1,
   Vocabulary = 2,
@@ -16,13 +18,13 @@ export type Lesson = {
   sectionId: number;
   type: LessonType;
   title: string;
-  icon: string;
+  icon: AvailableIcons;
 };
 
 export type Section = {
   id: number;
   title: string;
-  icon: string;
+  icon: AvailableIcons;
   lessons: Lesson[];
 };
 
