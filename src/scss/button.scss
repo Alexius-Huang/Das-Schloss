@@ -1,21 +1,30 @@
 button {
+  $shadow-color: lighten($night-1, 5%);
+  $btn-default-color: $frost-4;
+  $btn-success-color: $aurora-green;
+  $btn-warning-color: $aurora-yellow;
+  $btn-error-color: $aurora-red;
+  $btn-light-color: $snow-1;
+  $btn-dark-color: $night-1;
+
+  /* Rectangular Button */
   &.button-rect {
     padding: 1rem 1.5rem;
     font-size: 1.6rem;
     border-radius: .2rem;
     transition: .25s;
-    box-shadow: 0 .3rem .3rem $night-1;
-    background-color: $frost-4;
+    box-shadow: 0 .3rem .3rem $shadow-color;
+    background-color: $btn-default-color;
     color: $snow-1;
 
     &:hover {
-      background-color: darken($frost-4, 5%);
-      box-shadow: 0 .5rem .5rem $night-1;
+      background-color: darken($btn-default-color, 5%);
+      box-shadow: 0 .3rem .2rem $shadow-color;
     }
 
     &:active {
       transform: translateY(.3rem);
-      box-shadow: 0 .2rem .5rem $night-1;
+      box-shadow: 0 0 .2rem $shadow-color;
     }
 
     &:focus {
@@ -28,39 +37,88 @@ button {
   }
 
   &.button-rect--success {
-    background-color: darken($aurora-green, 15%);
+    background-color: darken($btn-success-color, 15%);
     &:hover {
-      background-color: darken($aurora-green, 10%);
+      background-color: darken($btn-success-color, 10%);
     }
   }
 
   &.button-rect--warning {
-    background-color: darken($aurora-yellow, 25%);
+    background-color: darken($btn-warning-color, 25%);
     &:hover {
-      background-color: darken($aurora-yellow, 20%);
+      background-color: darken($btn-warning-color, 20%);
     }
   }
 
   &.button-rect--error {
-    background-color: $aurora-red;
+    background-color: $btn-error-color;
     &:hover {
-      background-color: darken($aurora-red, 5%);
+      background-color: darken($btn-error-color, 5%);
     }
   }
 
   &.button-rect--light {
-    background-color: $snow-1;
-    color: $night-1;
+    background-color: $btn-light-color;
+    color: $btn-dark-color;
     &:hover {
-      background-color: darken($snow-1, 5%);
+      background-color: darken($btn-light-color, 5%);
     }
   }
 
   &.button-rect--dark {
-    background-color: $night-1;
-    color: $snow-1;
+    background-color: $btn-dark-color;
+    color: $btn-light-color;
     &:hover {
-      background-color: lighten($night-1, 5%);
+      background-color: lighten($btn-dark-color, 5%);
+    }
+  }
+
+  /* Round Button */
+  &.button-round {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: $btn-default-color;
+    box-shadow: 0 .2rem .2rem $shadow-color;
+  }
+
+  &.button-round--success { background-color: $btn-success-color; }
+  &.button-round--warning { background-color: $btn-warning-color; }
+  &.button-round--error { background-color: $btn-error-color; }
+  &.button-round--light { background-color: $btn-light-color; }
+  &.button-round--dark { background-color: $btn-dark-color; }
+
+  &.button-round__close {
+    position: relative;
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      width: 3rem;
+      height: .3rem;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background-color: $btn-light-color;
+      border-radius: 3rem;
+      transform-origin: center center;
+      transition: .25s;
+    }
+
+    &:before { transform: rotate(45deg); }
+    &:after { transform: rotate(-45deg); }
+    &:hover {
+      &:before { transform: rotate(135deg); }
+      &:after { transform: rotate(45deg); }
+    }
+
+    &.button-round__close--dark,
+    &.button-round--light {
+      &:before, &:after {
+        background-color: $btn-dark-color;
+      }
     }
   }
 }

@@ -1,0 +1,24 @@
+@import '../variables.scss';
+
+form.form {
+  width: 100%;
+  height: 100%;
+  padding: 2rem 2rem 3rem 2rem;
+  position: relative;
+
+  > h1.form__title {
+    font-size: 2.4rem;
+  }
+
+  > div.form__input-field-wrapper {
+    margin-bottom: 2rem;
+
+    > .text-field + .text-field {
+      margin-top: 1rem;
+    }
+  }
+
+  > div.form__button-field-wrapper {
+    text-align: right;
+  }
+}

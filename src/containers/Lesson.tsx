@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React /*, { useState, useEffect }*/ from 'react';
 // import Markdown from 'markdown-to-jsx';
 
 const Lesson: React.FC = () => {

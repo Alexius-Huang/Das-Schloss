@@ -1,10 +1,15 @@
-@import './scss/variables.scss';
-@import './scss/button.scss';
+@import 'scss/variables.scss';
+@import 'scss/button.scss';
+@import 'scss/animation.scss';
 
 *, *:after, *:before {
   padding: 0;
   margin: 0;
   box-sizing: inherit;
+}
+
+*:focus {
+  outline: none;
 }
 
 html {
@@ -31,9 +36,6 @@ h1, h2, h3, h4, h5, h6 {
 button {
   cursor: pointer;
   border: none;
-  &:focus {
-    outline: none;
-  }
 }
 
 li {
@@ -46,11 +48,6 @@ li {
 
 .react-icon {
   color: $snow-1;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
 }
 
 @media screen and (max-width: 765px) {

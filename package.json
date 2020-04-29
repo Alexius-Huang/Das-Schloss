@@ -6,17 +6,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "@types/classnames": "^2.2.10",
-    "@types/jest": "^25.2.1",
-    "@types/markdown-to-jsx": "^6.11.0",
-    "@types/node": "^13.13.4",
-    "@types/react": "^16.9.34",
-    "@types/react-dom": "^16.9.6",
-    "@types/react-icons": "^3.0.0",
-    "@types/react-redux": "^7.1.7",
-    "@types/react-router-dom": "^5.1.5",
-    "@types/redux-logger": "^3.0.7",
     "classnames": "^2.2.6",
+    "express": "^4.17.1",
     "markdown-to-jsx": "^6.11.1",
     "node-sass": "^4.14.0",
     "react": "^16.13.1",
@@ -51,5 +42,17 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^25.2.1",
+    "@types/markdown-to-jsx": "^6.11.0",
+    "@types/node": "^13.13.4",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@types/react-icons": "^3.0.0",
+    "@types/react-redux": "^7.1.7",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/redux-logger": "^3.0.7"
+  }
 }

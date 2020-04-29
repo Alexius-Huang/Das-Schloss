@@ -1,0 +1,30 @@
+@import '../variables.scss';
+@import '../animation.scss';
+
+div.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: transparentize($night-1, 0.5);
+  animation: fade-in .25s ease-in;
+}
+
+div.modal > div.modal__content {
+  color: $night-1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $snow-1;
+  border-radius: .2rem;
+
+  > button.button-round__close {
+    position: absolute;
+    right: -2rem;
+    top: -2rem;
+    z-index: 9999;
+  }
+}

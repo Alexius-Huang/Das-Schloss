@@ -1,0 +1,24 @@
+@import '../variables.scss';
+
+div.text-field {
+  > label.text-field__label {
+    font-size: 1.4rem;
+  }
+
+  > input.text-field__input {
+    border: none;
+    display: block;
+    font-size: 1.6rem;
+    width: 100%;
+    padding: .8rem 1rem;
+    border-radius: .2rem;
+    border-bottom: .2rem solid $night-1;
+    background-color: lighten($snow-1, 5%);
+    transition: .25s;
+
+    &:focus {
+      border-bottom-color: $frost-3;
+      background-color: white;
+    }
+  }
+}
