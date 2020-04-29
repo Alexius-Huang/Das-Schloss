@@ -8,7 +8,12 @@
 
 ul.card-group__cards {
   text-align: center;
-  padding: 3rem 0 1rem 0;
+  padding: 2rem 0;
+
+  > li.card {
+    margin-right: 1rem;
+    margin-top: 2rem
+  }
 }
 
 $card-color-list: (
@@ -33,8 +38,8 @@ $card-color-list: (
   }  
 }
 
-@media screen and (max-width: 96rem) {
+@media screen and (max-width: 960px) {
   .page__lessons {
     width: 90vw;
-  }  
+  }
 }

@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom';
 import Index from './containers/Index';
+import Lesson from './containers/Lesson';
 import Lessons from './containers/Lessons';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/lessons" component={Lessons} />
+        <Route path="/lesson/:id" component={Lesson} />
         <Route path="/" component={Index} />
       </Switch>
     </Router>

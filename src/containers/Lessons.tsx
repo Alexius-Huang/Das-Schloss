@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CardGroup from '../components/CardGroup';
 import Card from '../components/Card';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +16,7 @@ const lessonTypeMap = new Map([
 
 const Lessons: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const fetchState = useSelector((state: RootState) => state.Lessons.fetchState);
   const lessons = useSelector((state: RootState) => state.Lessons.sections);
   useEffect(() => {
@@ -37,10 +38,11 @@ const Lessons: React.FC = () => {
               {
                 section.lessons.map(lesson => (
                   <Card
-                    key={lesson.id}
+                    key={lesson.id} id={lesson.id}
                     classnames={`card--${lessonTypeMap.get(lesson.type)}`}
                     title={lesson.title}
                     icon={lesson.icon}
+                    handleClick={(id) => history.push(`/lesson/${id}`)}
                   />
                 ))
               }
