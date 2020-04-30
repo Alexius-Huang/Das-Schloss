@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import 'scss/components/Modal.scss';
+import '../scss/components/Modal.scss';
 
 interface ModalProps {
   width: number | string;

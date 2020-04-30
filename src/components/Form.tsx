@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import 'scss/components/Form.scss';
+import '../scss/components/Form.scss';
 
 interface FormProps {
   name: string;

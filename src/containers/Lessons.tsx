@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
 import { LessonFetchState, LessonType } from '../reducers/lessons.type';
 import { fetchLessonsStart } from '../actions/lessons';
-import 'scss/pages/Lessons.scss';
+import '../scss/pages/Lessons.scss';
 
 const lessonTypeMap = new Map([
   [LessonType.Conversation, 'conversation'],

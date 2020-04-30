@@ -1,7 +1,7 @@
 import React from 'react';
 import icons, { AvailableIcons } from '../helpers/icons';
 import c from 'classnames';
-import 'scss/components/CardGroup.scss';
+import '../scss/components/CardGroup.scss';
 
 export interface CardGroupProps {
   classnames?: string[] | string;

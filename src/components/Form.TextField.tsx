@@ -1,5 +1,5 @@
 import React from 'react';
-import 'scss/components/Form.TextField.scss';
+import '../scss/components/Form.TextField.scss';
 
 interface InputFieldProps {
   name: string;

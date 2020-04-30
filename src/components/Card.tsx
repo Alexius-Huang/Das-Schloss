@@ -1,7 +1,7 @@
 import React from 'react';
 import icons, { AvailableIcons } from '../helpers/icons';
 import c from 'classnames';
-import 'scss/components/Card.scss';
+import '../scss/components/Card.scss';
 
 export interface CardProps {
   classnames?: string[] | string;

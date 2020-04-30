@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
 import { openModal } from '../actions/ui';
 import { Modals } from '../reducers/ui.type';
-import 'scss/pages/Index.scss';
+import '../scss/pages/Index.scss';
 
 const Index: React.FC = () => {
   const history = useHistory();
