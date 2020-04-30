@@ -1,9 +1,9 @@
 import { AvailableIcons } from "../helpers/icons";
 
 export enum LessonType {
-  Conversation = 1,
-  Vocabulary = 2,
-  Grammer = 3,
+  Conversation = 'conversation',
+  Vocabulary = 'vocabulary',
+  Grammer = 'grammer',
 }
 
 export enum LessonFetchState {
@@ -15,7 +15,6 @@ export enum LessonFetchState {
 
 export type Lesson = {
   id: number;
-  sectionId: number;
   type: LessonType;
   title: string;
   icon: AvailableIcons;
