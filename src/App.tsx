@@ -7,6 +7,7 @@ import {
 import Index from './containers/Index';
 import Lesson from './containers/Lesson';
 import Lessons from './containers/Lessons';
+import Admin from './containers/Admin';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <Switch>
         <Route path="/lessons" component={Lessons} />
         <Route path="/lesson/:id" component={Lesson} />
+        <Route path="/admin" component={Admin} />
         <Route path="/" component={Index} />
       </Switch>
     </Router>

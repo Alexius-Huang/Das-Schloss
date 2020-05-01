@@ -1,0 +1,68 @@
+@import '../variables.scss';
+
+div.page__admin {
+  padding: 3rem 0 6rem 0;
+  font-size: 0;
+}
+
+div.page__admin > section.lesson-sections,
+div.page__admin > section.lessons {
+  display: inline-block;
+  font-size: 1.6rem;
+  vertical-align: top;
+}
+
+div.page__admin > section.lesson-sections {
+  width: 30%;
+  > h1.lesson-sections__header {
+    font-size: 2.4rem;
+    padding: 0 .5rem;
+    margin-bottom: 1rem;
+  }
+
+  > div.lesson-sections__button-group {
+    margin-bottom: 1rem;
+    > button.button {
+
+    }
+  }
+
+  > ul.lesson-sections__list > li.lesson-section {
+    background-color: $night-1;
+    border-radius: .2rem;
+    transition: .25s;
+
+    &.lesson-section--active, &:hover {
+      background-color: $night-2;
+    }
+
+    + li.lesson-section {
+      margin-top: .5rem;
+    }
+  }
+}
+
+div.page__admin > section.lesson-sections > ul.lesson-sections__list > li.lesson-section {
+  > a.lesson-section__link {
+    font-size: 1.6rem;
+    display: block;
+    padding: 1rem 1.5rem;
+    width: 100%;
+  }
+}
+
+div.page__admin > section.lessons {
+  width: 70%;
+  > h1.lessons__header {
+    font-size: 2.4rem;
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  > div.lessons__dashboard {
+    padding-left: 2rem;
+    > ul.lessons__card-list > li.card {
+      margin-bottom: 2rem;
+    }
+  }
+}

@@ -5,6 +5,11 @@ export interface SetSections {
   payload: Section[];
 }
 
+export interface FetchLessonsIfNotExist {
+  type: 'FETCH_LESSONS_IF_NOT_EXIST';
+  payload?: undefined;
+}
+
 export interface FetchLessonsStart {
   type: 'FETCH_LESSONS_START';
   payload?: undefined;
@@ -21,8 +26,9 @@ export interface FetchLessonsError {
 }
 
 export type LessonsAction =
-  SetSections         |
-  FetchLessonsStart   |
-  FetchLessonsSuccess |
+  SetSections            |
+  FetchLessonsIfNotExist |
+  FetchLessonsStart      |
+  FetchLessonsSuccess    |
   FetchLessonsError
 ;

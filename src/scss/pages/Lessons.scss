@@ -1,8 +1,6 @@
 @import '../variables.scss';
 
 .page__lessons {
-  width: 96rem;
-  margin: 0 auto;
   padding: 8rem 0 16rem 0;
 }
 
@@ -36,10 +34,4 @@ $card-color-list: (
       box-shadow: 0 -.3rem .3rem $color;
     }
   }  
-}
-
-@media screen and (max-width: 960px) {
-  .page__lessons {
-    width: 90vw;
-  }
 }

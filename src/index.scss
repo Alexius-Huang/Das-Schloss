@@ -1,5 +1,6 @@
 @import './scss/variables.scss';
 @import './scss/button.scss';
+@import './scss/link.scss';
 @import './scss/animation.scss';
 
 *, *:after, *:before {
@@ -33,17 +34,17 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
 }
 
-button {
-  cursor: pointer;
-  border: none;
-}
-
 li {
   list-style-type: none;
 }
 
 .page {
   animation: fade-in .25s ease-in;
+
+  &.page--960 {
+    width: 96rem;
+    margin: 0 auto;
+  }
 }
 
 .react-icon {
@@ -53,5 +54,11 @@ li {
 @media screen and (max-width: 765px) {
   html {
     font-size: 50%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .page.page--960 {
+    width: 90vw;
   }
 }

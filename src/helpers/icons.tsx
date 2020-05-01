@@ -7,6 +7,7 @@ import {
   FaRunning,
   FaHandPointDown,
   FaAppleAlt,
+  FaPlus,
 } from 'react-icons/fa';
 
 export type AvailableIcons =
@@ -16,7 +17,8 @@ export type AvailableIcons =
   'user-check' |
   'running' |
   'point-down' |
-  'apple'
+  'apple' |
+  'plus'
 ;
 
 const componentMap = new Map([
@@ -26,7 +28,8 @@ const componentMap = new Map([
   ['user-check', <FaUserCheck />],
   ['running', <FaRunning />],
   ['point-down', <FaHandPointDown />],
-  ['apple', <FaAppleAlt />]
+  ['apple', <FaAppleAlt />],
+  ['plus', <FaPlus />]
 ]);
 
 export default function (type: AvailableIcons) {

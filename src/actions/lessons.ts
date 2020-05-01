@@ -8,11 +8,12 @@ export function setSections(sections: Section[]): A.SetSections {
   };
 };
 
+export function fetchLessonsIfNotExist(): A.FetchLessonsIfNotExist {
+  return { type: 'FETCH_LESSONS_IF_NOT_EXIST' };
+};
+
 export function fetchLessonsStart(): A.FetchLessonsStart {
-  return {
-    type: 'FETCH_LESSONS_START',
-    payload: undefined,
-  };
+  return { type: 'FETCH_LESSONS_START' };
 };
 
 export function fetchLessonsSuccess(response: Section[]): A.FetchLessonsSuccess {

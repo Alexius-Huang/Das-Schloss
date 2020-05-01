@@ -6,6 +6,8 @@ button {
   $btn-error-color: $aurora-red;
   $btn-light-color: $snow-1;
   $btn-dark-color: $night-1;
+  cursor: pointer;
+  border: none;
 
   /* Rectangular Button */
   &.button-rect {

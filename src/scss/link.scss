@@ -1,0 +1,13 @@
+a.link {
+  text-decoration: none;
+  color: $frost-1;
+  transition: .25s;
+
+  &.link--underline {
+    text-decoration: underline;
+  }
+
+  &:hover {
+    color: $snow-2;
+  }
+}

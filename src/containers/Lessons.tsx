@@ -4,8 +4,8 @@ import CardGroup from '../components/CardGroup';
 import Card from '../components/Card';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
-import { LessonFetchState, LessonType } from '../reducers/lessons.type';
-import { fetchLessonsStart } from '../actions/lessons';
+import { LessonType } from '../reducers/lessons.type';
+import { fetchLessonsIfNotExist } from '../actions/lessons';
 import '../scss/pages/Lessons.scss';
 
 const lessonTypeMap = new Map([
@@ -17,18 +17,15 @@ const lessonTypeMap = new Map([
 const Lessons: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const fetchState = useSelector((state: RootState) => state.Lessons.fetchState);
-  const lessons = useSelector((state: RootState) => state.Lessons.sections);
+  const sections = useSelector((state: RootState) => state.Lessons.sections);
   useEffect(() => {
-    if (fetchState === LessonFetchState.INCOMPLETE) {
-      dispatch(fetchLessonsStart());
-    }
+    dispatch(fetchLessonsIfNotExist());
   });
 
   return (
-    <div className="page page__lessons">
+    <div className="page page__lessons page--960">
       {
-        lessons.map(section => (
+        sections.map(section => (
           <CardGroup
             key={section.id}
             title={section.title}
