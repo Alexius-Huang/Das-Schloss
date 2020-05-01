@@ -8,6 +8,24 @@ button {
   $btn-dark-color: $night-1;
   cursor: pointer;
   border: none;
+  font-family: $main-font-family;
+
+  /* Inherit Button */
+  &.button--inherit {
+    text-align: inherit;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    font-size: inherit;
+    background-color: inherit;
+    color: inherit;
+    border-radius: inherit;
+
+    &:hover {
+      color: inherit;
+      background-color: inherit;
+    }
+  }
 
   /* Rectangular Button */
   &.button-rect {

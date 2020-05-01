@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
+import QS from 'query-string';
 import Card from '../../components/Card';
+import { useHistory } from 'react-router-dom';
 import { Lesson, LessonType } from '../../reducers/lessons.type';
+import useQueries, { AdminQueryParams } from '../../hooks/useQueries';
 
-interface LessonsDashboardProps {
+interface LessonsListProps {
   lessons: Lesson[];
 }
 
@@ -12,8 +15,11 @@ const lessonTypeMap = new Map([
   [LessonType.Grammer, 'grammer']
 ]);
 
-const LessonsDashboard: React.FC<LessonsDashboardProps> = (props) => {
+const LessonsList: React.FC<LessonsListProps> = (props) => {
   const { lessons } = props;
+  const history = useHistory();
+  const queries: AdminQueryParams = useQueries();
+  const { lsID } = queries;
 
   return (
     <Fragment>
@@ -27,7 +33,9 @@ const LessonsDashboard: React.FC<LessonsDashboardProps> = (props) => {
                 classnames={`card--${lessonTypeMap.get(lesson.type)}`}
                 title={lesson.title}
                 icon={lesson.icon}
-                // handleClick={(id) => history.push(`/lesson/${id}`)}
+                handleClick={(id) => {
+                  history.push(`/admin?${QS.stringify({ lsID, lID: lesson.id })}`);
+                }}
               />
             ))
           }
@@ -43,4 +51,4 @@ const LessonsDashboard: React.FC<LessonsDashboardProps> = (props) => {
   );
 }
 
-export default LessonsDashboard;
+export default LessonsList;

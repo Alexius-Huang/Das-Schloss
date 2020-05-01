@@ -3,11 +3,18 @@ a.link {
   color: $frost-1;
   transition: .25s;
 
-  &.link--underline {
-    text-decoration: underline;
+  &:hover { color: $snow-2; }
+  &.link--plain-style-light {
+    color: $snow-1;
+    &:hover { color: $snow-1; }
   }
 
-  &:hover {
-    color: $snow-2;
+  &.link--plain-style-dark {
+    color: $night-1;
+    &:hover { color: $night-1; }
+  }
+
+  &.link--underline {
+    text-decoration: underline;
   }
 }

@@ -1,13 +1,12 @@
 import React from 'react';
-import '../scss/components/Form.TextField.scss';
 
 interface InputFieldProps {
   name: string;
   value: string;
   title?: string;
   placeholder?: string;
-  onInput?: (value: string) => void;
-  bindState?: React.Dispatch<React.SetStateAction<string>>;
+  onInput?: (value: any) => void;
+  bindState?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -15,8 +14,8 @@ const InputField: React.FC<InputFieldProps> = (props) => {
   const fieldClass = `text-field--${name}`;
 
   return (
-    <div className="text-field">
-      <label className="text-field__label" htmlFor={fieldClass}>{props.title ?? name}</label><br />
+    <div className="form__field text-field">
+      <label className="form__field-label text-field__label" htmlFor={fieldClass}>{props.title ?? name}</label><br />
       <input
         type={name === 'password' ? name : 'text'}
         className="text-field__input"

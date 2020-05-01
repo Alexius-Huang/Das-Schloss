@@ -52,3 +52,4 @@ const Form: React.FC<FormProps> = (props) => {
 
 export default Form;
 export { default as TextField } from './Form.TextField';
+export { default as OptionField } from './Form.OptionField';

@@ -1,3 +1,4 @@
 export { default as LessonSections } from './LessonSections';
-export { default as LessonsDashboard } from './LessonsDashboard';
+export { default as LessonsList } from './LessonsList';
 export { default as LessonSectionInfo } from './LessonSectionInfo';
+export { default as LessonInfo } from './LessonInfo';

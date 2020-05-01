@@ -11,13 +11,104 @@ form.form {
 
   > div.form__input-field-wrapper {
     margin-bottom: 2rem;
-
-    > .text-field + .text-field {
-      margin-top: 1rem;
-    }
   }
 
   > div.form__button-field-wrapper {
     text-align: right;
+  }
+
+  div.form__field + div.form__field {
+    margin-top: 1rem;
+  }
+
+  div.form__field > label.form__field-label {
+    font-size: 1.4rem;
+  }
+}
+
+$field-bg-color: lighten($snow-1, 5%);
+$field-bg-color-focused: $snow-1;
+$field-border-color: $frost-4;
+$field-border-color-focused: $frost-2;
+
+div.text-field > input.text-field__input {
+  border: none;
+  display: block;
+  font-size: 1.6rem;
+  width: 100%;
+  padding: .8rem 1rem;
+  border-radius: .2rem;
+  border-bottom: .3rem solid $field-border-color;
+  background-color: $field-bg-color;
+  transition: .25s;
+
+  &:focus {
+    border-bottom-color: $field-border-color-focused;
+    background-color: $field-bg-color-focused;
+  }
+}
+
+div.option-field > select.option-field__select {
+  display: none;
+
+  + div.option-field__dropdown-list {
+    position: relative;
+    cursor: pointer;
+    color: $night-1;
+
+    > p.option-field__selected {
+      position: relative;
+      background-color: $field-bg-color;
+      pointer-events: none;
+      border-radius: .2rem;
+      border-bottom: .3rem solid $field-border-color;
+
+      > button {
+        pointer-events: visible;
+        padding: .8rem 1rem;
+      }
+
+      &:hover {
+        background-color: $field-bg-color-focused;
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: 1.5rem;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        width: 0;
+        height: 0;
+        border-top: 1rem solid $night-1;
+        border-left: .8rem solid transparent;
+        border-right: .8rem solid transparent;
+      }
+    }
+
+    > ul.option-field__option-list {
+      display: none;
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      background-color: $field-bg-color;
+      border-bottom: .3rem solid $field-border-color;
+
+      &.option-field__option-list--active {
+        display: block;
+        pointer-events: visible;
+      }
+
+      > li.option-field__option-list-item {
+        font-size: 1.4rem;
+        > button {
+          padding: .6rem 1.2rem;
+        }
+        &:hover {
+          background-color: $field-bg-color-focused;
+        }
+      }
+    }
   }
 }
