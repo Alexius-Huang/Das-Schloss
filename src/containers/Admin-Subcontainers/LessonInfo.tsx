@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Form, { TextField, OptionField } from '../../components/Form';
+import Form, { TextField, OptionField, MarkdownField } from '../../components/Form';
 import { Lesson, LessonType } from '../../reducers/lessons.type';
+import 'react-mde/lib/styles/css/react-mde-all.css';
 
 interface LessonInfoProps {
   lesson: Lesson;
@@ -10,6 +11,7 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
   const { lesson } = props;
   const [title, setTitle] = useState(lesson.title);
   const [type, setType] = useState(lesson.type);
+  const [content, setContent] = useState('TODO: Content');
 
   useEffect(() => {
     setTitle(lesson.title);
@@ -21,7 +23,7 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
       <div className="lessons__lesson-info">
         <Form
           name="update-lesson-info"
-          onSubmit={() => console.log('update-lesson')}
+          onSubmit={console.log}
           submitButtonOption={{
             content: 'Update Lesson',
             style: 'success'
@@ -45,6 +47,13 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
             ]}
             value={type}
             bindState={setType}
+          />
+
+          <MarkdownField
+            title="Content"
+            name="content"
+            value={content}
+            bindState={setContent}
           />
         </Form>
       </div>

@@ -14,7 +14,11 @@ const SignInModal: React.FC = () => {
       height="auto"
       onClose={() => dispatch(closeModal())}
     >
-      <Form title="Sign In" name="sign-in" onSubmit={() => console.log('hello')}>
+      <Form
+        title="Sign In"
+        name="sign-in"
+        onSubmit={console.log}
+      >
         <TextField
           title="Email"
           name="email"

@@ -91,6 +91,7 @@ div.option-field > select.option-field__select {
       display: none;
       pointer-events: none;
       position: absolute;
+      z-index: 1000;
       width: 100%;
       background-color: $field-bg-color;
       border-bottom: .3rem solid $field-border-color;
@@ -110,5 +111,11 @@ div.option-field > select.option-field__select {
         }
       }
     }
+  }
+}
+
+div.markdown-field {
+  > textarea.markdown-field__textarea {
+    display: none;
   }
 }

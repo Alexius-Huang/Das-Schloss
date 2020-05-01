@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import c from 'classnames';
 import '../scss/components/Form.scss';
 
@@ -11,7 +11,12 @@ interface FormProps {
   name: string;
   title?: string;
   classnames?: string | string[];
-  onSubmit?: () => void;
+  onSubmit?: (
+    formData: {
+      [x: string]: FormDataEntryValue;
+      [x: number]: FormDataEntryValue;
+    }
+  ) => void;
   submitButtonOption?: SubmitButtonOption;
 }
 
@@ -29,8 +34,13 @@ const Form: React.FC<FormProps> = (props) => {
       buttonStyleClass = `button-rect--${sbo?.style}`;
   }
 
+  const formRef: React.MutableRefObject<HTMLFormElement | null> = useRef(null);
+
   return (
-    <form className={c('form', specificClassname, props.classnames)}>
+    <form
+      className={c('form', specificClassname, props.classnames)}
+      ref={formRef}
+    >
       {title && <h1 className="form__title">{title}</h1>}
 
       <div className="form__input-field-wrapper">
@@ -42,7 +52,11 @@ const Form: React.FC<FormProps> = (props) => {
           className={c('button', 'button-rect', buttonStyleClass)}
           onClick={(event) => {
             event.preventDefault();
-            props.onSubmit?.();
+            if (props.onSubmit !== undefined) {
+              const formData = new FormData(formRef.current as HTMLFormElement);
+              const formDataJSON = Object.fromEntries(formData);
+              props.onSubmit(formDataJSON);
+            }
           }}
         >{sbo?.content ?? 'Submit'}</button>
       </div>
@@ -53,3 +67,4 @@ const Form: React.FC<FormProps> = (props) => {
 export default Form;
 export { default as TextField } from './Form.TextField';
 export { default as OptionField } from './Form.OptionField';
+export { default as MarkdownField } from './Form.MarkdownField';

@@ -5,8 +5,8 @@ interface InputFieldProps {
   value: string;
   title?: string;
   placeholder?: string;
-  onInput?: (value: any) => void;
-  bindState?: React.Dispatch<React.SetStateAction<any>>;
+  onInput?: (value: string) => void;
+  bindState?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -17,9 +17,10 @@ const InputField: React.FC<InputFieldProps> = (props) => {
     <div className="form__field text-field">
       <label className="form__field-label text-field__label" htmlFor={fieldClass}>{props.title ?? name}</label><br />
       <input
-        type={name === 'password' ? name : 'text'}
         className="text-field__input"
         id={fieldClass}
+        type={name === 'password' ? name : 'text'}
+        name={name}
         value={props.value}
         placeholder={props.placeholder ?? ''}
         onChange={(event) => {
