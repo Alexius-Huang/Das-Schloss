@@ -118,4 +118,39 @@ div.markdown-field {
   > textarea.markdown-field__textarea {
     display: none;
   }
+
+  > div.react-mde {
+    border-color: $night-3;
+    > div.mde-header {
+      background-color: $night-1;
+      line-height: 1.2;
+      > div.mde-tabs > button {
+        color: $snow-1;
+        margin: 0;
+        font-size: 1.2rem;
+        padding: 0 1rem;
+        border: none;
+        &:hover, &.selected {
+          background-color: $night-2;
+        }
+      }
+
+      > ul.mde-header-group > li.mde-header-item > button {
+        color: $snow-1;
+      }
+    }
+
+    div.mde-textarea-wrapper > textarea.mde-text {
+      background-color: $field-bg-color;
+      font-size: 1.4rem;
+      line-height: 1.7;
+      &:focus {
+        background-color: $field-bg-color-focused;
+      }
+    }
+
+    div.grip {
+      background-color: $field-border-color;
+    }
+  }
 }
