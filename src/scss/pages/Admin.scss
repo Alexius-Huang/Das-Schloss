@@ -19,12 +19,10 @@ div.page__admin > section.lesson-sections {
     padding: 0 .5rem;
     margin-bottom: 1rem;
   }
+  
 
   > div.lesson-sections__button-group {
     margin-bottom: 1rem;
-    > button.button {
-
-    }
   }
 
   > ul.lesson-sections__list > li.lesson-section {
@@ -53,16 +51,23 @@ div.page__admin > section.lesson-sections > ul.lesson-sections__list > li.lesson
 
 div.page__admin > section.lessons {
   width: 70%;
-  > h1.lessons__header {
+  padding-left: 2rem;
+
+  > h1.lessons__header,
+  > h2.lessons__header {
     font-size: 2.4rem;
-    padding-left: 2rem;
     margin-bottom: 1rem;
   }
 
-  > div.lessons__dashboard {
-    padding-left: 2rem;
-    > ul.lessons__card-list > li.card {
-      margin-bottom: 2rem;
-    }
+  > h2.lessons__header {
+    font-size: 1.8rem;
+  }
+
+  > div.lessons__section-info {
+    margin-bottom: 2rem;
+  }
+
+  > div.lessons__dashboard > ul.lessons__card-list > li.card {
+    margin-bottom: 2rem;
   }
 }

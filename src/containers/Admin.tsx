@@ -1,36 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import QS from 'query-string';
-import c from 'classnames';
-import Card from '../components/Card';
+import { LessonSections, LessonsDashboard, LessonSectionInfo } from './Admin-Subcontainers';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sectionsSelector, lessonFetchStateSelector } from '../selectors/Lessons';
 import { fetchLessonsIfNotExist } from '../actions/lessons';
-import { Lesson, LessonFetchState } from '../reducers/lessons.type';
-import { LessonType } from '../reducers/lessons.type';
+import { Lesson, LessonFetchState, Section } from '../reducers/lessons.type';
+import useQueries, { AdminQueryParams } from '../hooks/useQueries';
 import '../scss/pages/Admin.scss';
-
-interface AdminQueryParams {
-  lsID?: string;
-}
-
-const lessonTypeMap = new Map([
-  [LessonType.Conversation, 'conversation'],
-  [LessonType.Vocabulary, 'vocabulary'],
-  [LessonType.Grammer, 'grammer']
-]);
 
 const Admin: React.FC = () => {
   const sections = useSelector(sectionsSelector);
   const fetchState = useSelector(lessonFetchStateSelector);
+  const fetchedComplete = fetchState === LessonFetchState.COMPLETED;
   const dispatch = useDispatch();
   const history = useHistory();
-  const { search } = history.location;
-  const queries: AdminQueryParams = QS.parse(search);
+  const queries: AdminQueryParams = useQueries();
   const lessonSectionID = queries.lsID ? parseInt(queries.lsID) : undefined;
+  const targetSection: Section = lessonSectionID === undefined ?
+    { id: NaN, title: 'Section Title', icon: 'check', lessons: [] } :
+    sections.find(s => s.id === lessonSectionID) as Section;
 
   let lessons: Lesson[] = [];
-  if (fetchState === LessonFetchState.COMPLETED && lessonSectionID !== undefined) {
+  if (fetchedComplete && lessonSectionID !== undefined) {
     lessons = sections.find(s => s.id === lessonSectionID)!.lessons;
   }
 
@@ -45,67 +37,24 @@ const Admin: React.FC = () => {
 
   return (
     <div className="page page__admin page--960">
-      <section className="lesson-sections">
-        <h1 className="lesson-sections__header">Lesson Sections</h1>
-        <div className="lesson-sections__button-group">
-          <button className="button button-rect button-rect--success">
-            New Section
-          </button>
-        </div>
-        
-        <ul className="lesson-sections__list">
-          {
-            sections.map(section => (
-              <li
-                key={section.id}
-                className={c(
-                  'lesson-section',
-                  lessonSectionID === section.id ? 'lesson-section--active' : ''
-                )}
-              >
-                <a
-                  href="#"
-                  className="lesson-section__link link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleInspectLessonSection(section.id);
-                  }}
-                >{section.title}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+      <LessonSections
+        sections={sections}
+        onInspectSection={handleInspectLessonSection}
+      />
 
       <section className="lessons">
-        <h1 className="lessons__header">Lessons</h1>
-        <div className="lessons__dashboard">
-          {
-            lessonSectionID === undefined ? (
-              <p className="lessons__default-info">Please Select a Section</p>
-            ) : (
-              <ul className="lessons__card-list">
-                {
-                  lessons.map(lesson => (
-                    <Card
-                      key={lesson.id} id={lesson.id}
-                      classnames={`card--${lessonTypeMap.get(lesson.type)}`}
-                      title={lesson.title}
-                      icon={lesson.icon}
-                      // handleClick={(id) => history.push(`/lesson/${id}`)}
-                    />
-                  ))
-                }
+        <h1 className="lessons__header">Manage Lessons in Section</h1>
 
-                <Card
-                  id={NaN}
-                  title="New Lesson"
-                  icon="plus"
-                />
-              </ul>
-            )
-          }
-        </div>
+        {
+          lessonSectionID === undefined || ( ! fetchedComplete) ? (
+            <p className="lessons__default-info">Please Select a Section</p>
+          ) : (
+            <Fragment>
+              <LessonSectionInfo section={targetSection} />
+              <LessonsDashboard lessons={lessons} />
+            </Fragment>
+          )
+        }
       </section>
     </div>
   );

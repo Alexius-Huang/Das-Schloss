@@ -3,6 +3,7 @@ import '../scss/components/Form.TextField.scss';
 
 interface InputFieldProps {
   name: string;
+  value: string;
   title?: string;
   placeholder?: string;
   onInput?: (value: string) => void;
@@ -20,6 +21,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
         type={name === 'password' ? name : 'text'}
         className="text-field__input"
         id={fieldClass}
+        value={props.value}
         placeholder={props.placeholder ?? ''}
         onChange={(event) => {
           props.bindState?.(event.target.value);

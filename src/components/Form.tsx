@@ -1,21 +1,37 @@
 import React from 'react';
-import classnames from 'classnames';
+import c from 'classnames';
 import '../scss/components/Form.scss';
+
+type SubmitButtonOption = {
+  content?: string;
+  style?: 'normal' | 'success' | 'warning' | 'error' | 'light';
+}
 
 interface FormProps {
   name: string;
   title?: string;
   classnames?: string | string[];
   onSubmit?: () => void;
+  submitButtonOption?: SubmitButtonOption;
 }
 
 const Form: React.FC<FormProps> = (props) => {
   const { name, title } = props;
   const specificClassname = `form__${name}`;
+  const { submitButtonOption: sbo } = props;
+  let buttonStyleClass: string;
+
+  switch (sbo?.style) {
+    case undefined:
+    case 'normal':
+      buttonStyleClass = 'button-rect--dark';
+    default:
+      buttonStyleClass = `button-rect--${sbo?.style}`;
+  }
 
   return (
-    <form className={classnames('form', specificClassname, props.classnames)}>
-      <h1 className="form__title">{title ?? name}</h1>
+    <form className={c('form', specificClassname, props.classnames)}>
+      {title && <h1 className="form__title">{title}</h1>}
 
       <div className="form__input-field-wrapper">
         {props.children}
@@ -23,15 +39,16 @@ const Form: React.FC<FormProps> = (props) => {
 
       <div className="form__button-field-wrapper">
         <button
-          className="button button-rect button-rect--dark"
+          className={c('button', 'button-rect', buttonStyleClass)}
           onClick={(event) => {
             event.preventDefault();
             props.onSubmit?.();
           }}
-        >Submit</button>
+        >{sbo?.content ?? 'Submit'}</button>
       </div>
     </form>
   );
 };
 
 export default Form;
+export { default as TextField } from './Form.TextField';
