@@ -7,7 +7,7 @@ interface OptionFieldProps {
   title?: string;
   options: ({ value: string; name: string })[];
   onChange?: (value: any) => void;
-  bindState?: React.Dispatch<React.SetStateAction<any>>;
+  bind?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const OptionField: React.FC<OptionFieldProps> = (props) => {
@@ -64,7 +64,7 @@ const OptionField: React.FC<OptionFieldProps> = (props) => {
                   className="button button--inherit"
                   onClick={(event) => {
                     event.preventDefault();
-                    props.bindState?.(value);
+                    props.bind?.(value);
                     props.onChange?.(value);
                     setDropdownActive(false);
                   }}

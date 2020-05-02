@@ -4,6 +4,7 @@ import QS from 'query-string';
 export interface AdminQueryParams {
   lsID?: string;
   lID?: string;
+  lsNew?: true;
 }
 
 export default function () {

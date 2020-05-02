@@ -20,7 +20,7 @@ const LessonSectionInfo: React.FC<LessonSectionInfoProps> = (props) => {
       <div className="lessons__section-info">
         <Form
           name="update-section-info"
-          onSubmit={() => console.log('update-section')}
+          onSubmit={console.log}
           submitButtonOption={{
             content: 'Update Section',
             style: 'success'
@@ -31,7 +31,7 @@ const LessonSectionInfo: React.FC<LessonSectionInfoProps> = (props) => {
             name="title"
             placeholder="Section Title"
             value={title}
-            bindState={setTitle}
+            bind={setTitle}
           />
         </Form>
       </div>

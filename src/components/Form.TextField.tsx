@@ -6,7 +6,7 @@ interface InputFieldProps {
   title?: string;
   placeholder?: string;
   onInput?: (value: string) => void;
-  bindState?: React.Dispatch<React.SetStateAction<string>>;
+  bind?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const InputField: React.FC<InputFieldProps> = (props) => {
@@ -24,7 +24,7 @@ const InputField: React.FC<InputFieldProps> = (props) => {
         value={props.value}
         placeholder={props.placeholder ?? ''}
         onChange={(event) => {
-          props.bindState?.(event.target.value);
+          props.bind?.(event.target.value);
           props.onInput?.(event.target.value);
         }}
       />

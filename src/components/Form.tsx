@@ -11,12 +11,7 @@ interface FormProps {
   name: string;
   title?: string;
   classnames?: string | string[];
-  onSubmit?: (
-    formData: {
-      [x: string]: FormDataEntryValue;
-      [x: number]: FormDataEntryValue;
-    }
-  ) => void;
+  onSubmit?: (formData: any) => void;
   submitButtonOption?: SubmitButtonOption;
 }
 

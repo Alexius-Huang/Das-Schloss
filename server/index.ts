@@ -1,9 +1,9 @@
 import express from 'express';
 import knex from 'knex';
-import bcrypt from 'bcrypt';
+// import bcrypt from 'bcrypt';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { LessonSection } from './models/Lessons.type';
+import * as T from './models/Lessons.type';
 
 dotenv.config();
 
@@ -33,10 +33,22 @@ app.use((req, res, next) => {
 // app.get('/', (req, res) => {
 //   console.log('Hello world!');
 // });
+const LessonModel = {
+  db,
+  createLessonSection(params: T.NewLessonSection) {
+    return this.db.insert({ ...params }).into('lesson_sections').returning('*');
+  },
+  createLesson(params: T.NewLesson, section: T.LessonSection) {
+    return this.db.insert({ ...params, lesson_section_id: section.id }).into('lessons').returning('*');
+  },
+  allLessonSections() {
+    return this.db.select('*').from('lesson_sections');
+  },
+};
 
 app.get('/lessons', async (req, res) => {
   try {
-    const lessons: LessonSection[] = await db.raw(`
+    const lessons: T.LessonSection[] = await db.raw(`
       SELECT
         ls.id, ls.title, ls.icon, json_agg(lessons ORDER BY lessons.id ASC) AS lessons
       FROM lesson_sections ls
@@ -46,8 +58,33 @@ app.get('/lessons', async (req, res) => {
     `).then(res => res.rows);
 
     res.status(200).json(lessons);
-  } catch (err) {
+  } catch {
     res.status(400).json('Fetch lessons error...');
+  }
+});
+
+app.post('/lesson-section', async (req, res) => {
+  try {
+    const result: T.LessonSection = await db.transaction(async trx => {
+      const newSection: T.NewLessonSection = req.body;
+      const result1: T.LessonSection[] = await LessonModel.createLessonSection(newSection).transacting(trx);
+      const createdSection: T.LessonSection = { ...result1[0], lessons: [] };
+
+      const newLesson: T.NewLesson = {
+        title: `New lesson from ${createdSection.title}`,
+        type: T.LessonType.Conversation,
+        content: 'Setup content for new lesson...',
+      };
+      const result2: T.Lesson[] = await LessonModel.createLesson(newLesson, createdSection).transacting(trx);
+      const createdLesson: T.Lesson = { ...result2[0] };
+      createdSection.lessons.push(createdLesson);
+
+      return createdSection;
+    });
+
+    res.status(200).json(result);
+  } catch {
+    res.status(400).json('Create new lesson-section error...');
   }
 });
 

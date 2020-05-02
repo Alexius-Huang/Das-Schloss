@@ -25,7 +25,7 @@ const SignInModal: React.FC = () => {
           placeholder="Your Email"
           value=""
           // onInput={v => setE(v)}
-          // bindState={setE}
+          // bind={setE}
         />
         <TextField
           title="Password"
@@ -33,7 +33,7 @@ const SignInModal: React.FC = () => {
           placeholder="Your Password"
           value=""
           // onInput={v => setE(v)}
-          // bindState={setE}
+          // bind={setE}
         />
       </Form>
     </Modal>

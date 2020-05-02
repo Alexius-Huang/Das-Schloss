@@ -1,6 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import QS from 'query-string';
-import { LessonSections, LessonsList, LessonSectionInfo, LessonInfo } from './Admin-Subcontainers';
+import * as AdminSection from './AdminSections';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { sectionsSelector, lessonFetchStateSelector } from '../selectors/Lessons';
@@ -23,7 +23,7 @@ const Admin: React.FC = () => {
     sections.find(s => s.id === lessonSectionID) as Section;
 
   let lessons: Lesson[] = [];
-  let targetLesson: Lesson = { id: NaN, type: LessonType.Conversation, title: 'Lesson Title', icon: 'check' };
+  let targetLesson: Lesson = { id: NaN, type: LessonType.Conversation, title: '-', icon: 'check', content: '-' };
   if (fetchedComplete && lessonSectionID !== undefined) {
     lessons = sections.find(s => s.id === lessonSectionID)!.lessons;
 
@@ -42,24 +42,26 @@ const Admin: React.FC = () => {
   };
 
   let renderLessons: JSX.Element;
-  if (lessonSectionID === undefined || ( ! fetchedComplete)) {
+  if (queries.lsNew) {
+    renderLessons = <AdminSection.NewLessonSection />;
+  } else if (lessonSectionID === undefined || ( ! fetchedComplete)) {
     renderLessons = (
       <p className="lessons__default-info">Please Select a Section</p>
     );
   } else if (lessonID !== undefined) {
-    renderLessons = <LessonInfo lesson={targetLesson} />;
+    renderLessons = <AdminSection.LessonInfo lesson={targetLesson} />;
   } else {
     renderLessons = (
       <Fragment>
-        <LessonSectionInfo section={targetSection} />
-        <LessonsList lessons={lessons} />
+        <AdminSection.LessonSectionInfo section={targetSection} />
+        <AdminSection.LessonsList lessons={lessons} />
       </Fragment>
     );
   }
 
   return (
     <div className="page page__admin page--960">
-      <LessonSections
+      <AdminSection.LessonSections
         sections={sections}
         onInspectSection={handleInspectLessonSection}
       />

@@ -13,12 +13,26 @@ export enum LessonFetchState {
   ERROR
 };
 
+export enum CreateLessonSectionState {
+  STATIC,
+  PROCESSING,
+  ERROR
+}
+
 export type Lesson = {
   id: number;
   type: LessonType;
   title: string;
   icon: AvailableIcons;
+  content: string;
 };
+
+export type NewLesson = {
+  type: LessonType;
+  title: string;
+  icon?: AvailableIcons;
+  content?: string;
+}
 
 export type Section = {
   id: number;
@@ -27,8 +41,19 @@ export type Section = {
   lessons: Lesson[];
 };
 
+export type NewSection = {
+  title: string;
+  icon?: AvailableIcons;
+}
+
 export interface LessonsState {
   sections: Section[];
   fetchState: LessonFetchState;
+  createLessonSection: {
+    state: CreateLessonSectionState;
+    createdInstance: null | Section;
+    params: null | NewSection;
+    error: null | string;
+  };
   error: null | string;
 }

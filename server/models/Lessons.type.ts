@@ -9,6 +9,14 @@ export interface Lesson {
   type: LessonType;
   title: string;
   icon: string | null;
+  content: string;
+}
+
+export interface NewLesson {
+  type: LessonType;
+  title: string;
+  icon?: string;
+  content?: string;
 }
 
 export interface LessonSection {
@@ -18,7 +26,7 @@ export interface LessonSection {
   lessons: Lesson[];
 }
 
-export interface LessonContent {
-  id: number;
-  content: string;
+export interface NewLessonSection {
+  title: string;
+  icon?: string;
 }

@@ -7,7 +7,7 @@ interface MarkdownFieldProps {
   value: string;
   title?: string;
   onInput?: (value: string) => void;
-  bindState?: React.Dispatch<React.SetStateAction<string>>;
+  bind?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const converter = new Converter({
@@ -37,7 +37,7 @@ const MarkdownField: React.FC<MarkdownFieldProps> = (props) => {
       <MarkdownEditor
         value={props.value}
         onChange={(value) => {
-          props.bindState?.(value);
+          props.bind?.(value);
           props.onInput?.(value);
         }}
         selectedTab={selectedTab}

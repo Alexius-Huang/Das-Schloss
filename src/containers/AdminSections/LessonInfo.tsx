@@ -11,7 +11,7 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
   const { lesson } = props;
   const [title, setTitle] = useState(lesson.title);
   const [type, setType] = useState(lesson.type);
-  const [content, setContent] = useState('TODO: Content');
+  const [content, setContent] = useState(lesson.content);
 
   useEffect(() => {
     setTitle(lesson.title);
@@ -34,7 +34,7 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
             name="title"
             placeholder="Lesson Title"
             value={title}
-            bindState={setTitle}
+            bind={setTitle}
           />
 
           <OptionField
@@ -46,14 +46,14 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
               { value: LessonType.Grammer, name: 'Grammer' }
             ]}
             value={type}
-            bindState={setType}
+            bind={setType}
           />
 
           <MarkdownField
             title="Content"
             name="content"
             value={content}
-            bindState={setContent}
+            bind={setContent}
           />
         </Form>
       </div>
