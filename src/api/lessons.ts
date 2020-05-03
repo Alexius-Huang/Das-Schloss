@@ -1,4 +1,4 @@
-import { NewSection } from "../reducers/lessons.type";
+import { NewSection, UpdateSection, UpdateLesson } from "../reducers/lessons.type";
 
 export function fetchAllLessons() {
   return fetch('/lessons')
@@ -10,5 +10,21 @@ export function createLessonSection(params: NewSection) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params)
+  }).then(res => res.json());
+}
+
+export function updateLessonSection(id: number, params: UpdateSection) {
+  return fetch(`/lesson-section/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  }).then(res => res.json());
+}
+
+export function updateLesson(params: UpdateLesson) {
+  return fetch(`/lesson/${params.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params.params),
   }).then(res => res.json());
 }

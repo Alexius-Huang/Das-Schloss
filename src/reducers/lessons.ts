@@ -1,16 +1,21 @@
 import { LessonsAction } from '../actions/lessons.type';
 import * as T from './lessons.type';
 
+function transaction<U extends T.LessonTransactions>(params?: Partial<U>) {
+  return {
+    state: params?.state ?? T.APIState.STATIC,
+    instance: params?.instance ?? null,
+    params: params?.params ?? null,
+    error: params?.error ?? null,
+  };
+}
+
 const defaultState: T.LessonsState = {
   sections: [],
   fetchState: T.LessonFetchState.INCOMPLETE,
   error: null,
-  createLessonSection: {
-    state: T.CreateLessonSectionState.STATIC,
-    createdInstance: null,
-    params: null,
-    error: null,
-  },
+  createLessonSection: transaction<T.CreateLessonSectionTransaction>(),
+  updateLessonSection: transaction<T.UpdateLessonTransaction>(),
 };
 
 export default function (state = defaultState, action: LessonsAction): T.LessonsState {
@@ -27,43 +32,62 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
     case 'CREATE_LESSON_SECTION_RESET':
       return {
         ...state,
-        createLessonSection: {
-          state: T.CreateLessonSectionState.STATIC,
-          createdInstance: null,
-          params: null,
-          error: null,
-        },
+        createLessonSection: transaction<T.CreateLessonSectionTransaction>(),
       };
     case 'CREATE_LESSON_SECTION_START':
       return {
         ...state,
-        createLessonSection: {
-          state: T.CreateLessonSectionState.PROCESSING,
-          createdInstance: null,
-          params: action.payload,
-          error: null,
-        },
+        createLessonSection: transaction<T.CreateLessonSectionTransaction>({
+          state: T.APIState.PROCESSING,
+          params: action.payload
+        }),
       };
     case 'CREATE_LESSON_SECTION_SUCCESS':
       return {
         ...state,
         sections: [...state.sections, action.payload],
-        createLessonSection: {
-          state: T.CreateLessonSectionState.STATIC,
-          createdInstance: action.payload,
-          params: null,
-          error: null,
-        },
+        createLessonSection: transaction<T.CreateLessonSectionTransaction>({
+          state: T.APIState.STATIC,
+          instance: action.payload
+        }),
       };
     case 'CREATE_LESSON_SECTION_ERROR':
       return {
         ...state,
-        createLessonSection: {
-          state: T.CreateLessonSectionState.ERROR,
-          createdInstance: null,
-          params: null,
+        createLessonSection: transaction<T.CreateLessonSectionTransaction>({
+          state: T.APIState.ERROR,
           error: action.payload,
-        },
+        }),
+      };
+
+    case 'UPDATE_LESSON_START':
+      return {
+        ...state,
+        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+          state: T.APIState.PROCESSING,
+          params: action.payload
+        }),
+      };
+    case 'UPDATE_LESSON_SUCCESS':
+      const lesson = action.payload;
+
+      // TODO: Update lesson in the section!
+      console.log(lesson);
+
+      return {
+        ...state,
+        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+          state: T.APIState.STATIC,
+          instance: lesson,
+        }),
+      };
+    case 'UPDATE_LESSON_ERROR':
+      return {
+        ...state,
+        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+          state: T.APIState.ERROR,
+          error: action.payload,
+        }),
       };
     default:
       return state;

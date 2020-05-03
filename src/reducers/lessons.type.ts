@@ -13,7 +13,7 @@ export enum LessonFetchState {
   ERROR
 };
 
-export enum CreateLessonSectionState {
+export enum APIState {
   STATIC,
   PROCESSING,
   ERROR
@@ -34,6 +34,8 @@ export type NewLesson = {
   content?: string;
 }
 
+export type UpdateLesson = { id: number; params: Partial<NewLesson> };
+
 export type Section = {
   id: number;
   title: string;
@@ -46,14 +48,26 @@ export type NewSection = {
   icon?: AvailableIcons;
 }
 
+export type UpdateSection = { id: number; params: Partial<NewSection> };
+
+interface APITransaction<Tinstance, Tparams, Terror = string> {
+  state: APIState;
+  instance: null | Tinstance;
+  params: null | Tparams;
+  error: null | Terror;
+}
+
+export type CreateLessonSectionTransaction = APITransaction<Section, NewSection>;
+export type UpdateLessonTransaction = APITransaction<Lesson, UpdateLesson>;
+export type LessonTransactions =
+  CreateLessonSectionTransaction |
+  UpdateLessonTransaction
+;
+
 export interface LessonsState {
   sections: Section[];
   fetchState: LessonFetchState;
-  createLessonSection: {
-    state: CreateLessonSectionState;
-    createdInstance: null | Section;
-    params: null | NewSection;
-    error: null | string;
-  };
+  createLessonSection: CreateLessonSectionTransaction;
+  updateLessonSection: UpdateLessonTransaction;
   error: null | string;
 }

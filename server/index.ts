@@ -30,9 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get('/', (req, res) => {
-//   console.log('Hello world!');
-// });
 const LessonModel = {
   db,
   createLessonSection(params: T.NewLessonSection) {
@@ -40,6 +37,12 @@ const LessonModel = {
   },
   createLesson(params: T.NewLesson, section: T.LessonSection) {
     return this.db.insert({ ...params, lesson_section_id: section.id }).into('lessons').returning('*');
+  },
+  updateLessonSection(id: number, params: T.UpdateLessonSection) {
+    return this.db.from('lesson_sections').where({ id }).update(params).returning('*');
+  },
+  updateLesson(id: number, params: T.UpdateLesson) {
+    return this.db.from('lessons').where({ id }).update(params).returning('*');
   },
   allLessonSections() {
     return this.db.select('*').from('lesson_sections');
@@ -85,6 +88,28 @@ app.post('/lesson-section', async (req, res) => {
     res.status(200).json(result);
   } catch {
     res.status(400).json('Create new lesson-section error...');
+  }
+});
+
+app.put('/lesson/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const updateLessonData: T.UpdateLesson = req.body;
+    const result: T.Lesson[] = await LessonModel.updateLesson(id, updateLessonData);
+    res.status(200).json(result[0]);
+  } catch {
+    res.status(400).json('Some error occurs on updating lesson...');
+  }
+});
+
+app.put('/lesson-section/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const updateLessonSectionData: T.UpdateLessonSection = req.body;
+    const result: T.LessonSection[] = await LessonModel.updateLessonSection(id, updateLessonSectionData);
+    res.status(200).json(result[0]);
+  } catch {
+    res.status(400).json('Some error occurs on updating lesson...');
   }
 });
 

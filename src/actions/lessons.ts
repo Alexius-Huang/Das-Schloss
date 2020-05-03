@@ -1,4 +1,4 @@
-import { Section, NewSection } from '../reducers/lessons.type';
+import { Section, NewSection, UpdateLesson, Lesson } from '../reducers/lessons.type';
 import * as A from './lessons.type';
 
 export function setSections(sections: Section[]): A.SetSections {
@@ -51,6 +51,27 @@ export function createLessonSectionSuccess(response: Section): A.CreateLessonSec
 export function createLessonSectionError(message: string): A.CreateLessonSectionError {
   return {
     type: 'CREATE_LESSON_SECTION_ERROR',
+    payload: message,
+  };
+}
+
+export function updateLessonStart(params: UpdateLesson): A.UpdateLessonStart {
+  return {
+    type: 'UPDATE_LESSON_START',
+    payload: params,
+  };
+}
+
+export function updateLessonSuccess(response: Lesson): A.UpdateLessonSuccess {
+  return {
+    type: 'UPDATE_LESSON_SUCCESS',
+    payload: response,
+  };
+}
+
+export function updateLessonError(message: string): A.UpdateLessonError {
+  return {
+    type: 'UPDATE_LESSON_ERROR',
     payload: message,
   };
 }

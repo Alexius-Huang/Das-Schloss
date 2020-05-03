@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import QS from 'query-string';
 import Form, { TextField } from '../../components/Form';
-import { NewSection, CreateLessonSectionState as CreationState } from '../../reducers/lessons.type';
+import { NewSection, APIState as CreationState } from '../../reducers/lessons.type';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLessonSectionStart, createLessonSectionReset } from '../../actions/lessons';
 import { RootState } from '../../reducers';
@@ -11,7 +11,7 @@ const NewLessonSection: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [title, setTitle] = useState('');
-  const { state: s, createdInstance: ci } = useSelector(
+  const { state: s, instance: ci } = useSelector(
     (state: RootState) => state.Lessons.createLessonSection
   );
 

@@ -1,4 +1,4 @@
-import { Section, NewSection } from '../reducers/lessons.type';
+import { Section, NewSection, UpdateLesson, Lesson } from '../reducers/lessons.type';
 
 export interface SetSections {
   type: 'SET_SECTIONS';
@@ -42,6 +42,20 @@ export interface CreateLessonSectionError {
   payload: string;
 }
 
+export interface UpdateLessonStart {
+  type: 'UPDATE_LESSON_START';
+  payload: UpdateLesson;
+}
+
+export interface UpdateLessonSuccess {
+  type: 'UPDATE_LESSON_SUCCESS';
+  payload: Lesson;
+}
+
+export interface UpdateLessonError {
+  type: 'UPDATE_LESSON_ERROR';
+  payload: string;
+}
 
 export type LessonsAction =
   SetSections                |
@@ -52,5 +66,8 @@ export type LessonsAction =
   CreateLessonSectionReset   |
   CreateLessonSectionStart   |
   CreateLessonSectionSuccess |
-  CreateLessonSectionError
+  CreateLessonSectionError   |
+  UpdateLessonStart          |
+  UpdateLessonSuccess        |
+  UpdateLessonError
 ;

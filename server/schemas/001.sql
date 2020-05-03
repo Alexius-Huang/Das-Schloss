@@ -17,7 +17,7 @@ CREATE TYPE lesson_type AS ENUM ('conversation', 'vocabulary', 'grammer');
 CREATE TABLE IF NOT EXISTS lesson_sections (
   id SERIAL PRIMARY KEY,
   title VARCHAR(100) NOT NULL,
-  icon VARCHAR(100) 'check',
+  icon VARCHAR(100) 'check'
 );
 
 CREATE TABLE IF NOT EXISTS lessons (
