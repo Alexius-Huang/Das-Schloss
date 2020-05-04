@@ -9,17 +9,27 @@ export interface Lesson {
   type: LessonType;
   title: string;
   icon: string | null;
-  content: string;
 }
 
 export interface NewLesson {
   type: LessonType;
   title: string;
   icon?: string;
-  content?: string;
 }
 
 export type UpdateLesson = Partial<NewLesson>;
+
+export interface LessonContent {
+  id: number;
+  content: string;
+  lesson: Lesson;
+}
+
+export interface NewLessonContent {
+  content?: string;
+}
+
+export type UpdateLessonContent = Partial<NewLessonContent>;
 
 export interface LessonSection {
   id: number;

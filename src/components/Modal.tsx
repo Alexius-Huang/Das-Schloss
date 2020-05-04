@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../actions/ui';
+import { closeModal } from '../redux.actions/ui';
 import useOnce from '../hooks/useOnce';
 import '../scss/components/Modal.scss';
 

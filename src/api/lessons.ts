@@ -1,7 +1,12 @@
-import { NewSection, UpdateSection, UpdateLesson } from "../reducers/lessons.type";
+import { NewSection, UpdateSection, UpdateLesson } from "../redux.reducers/lessons.type";
 
 export function fetchAllLessons() {
   return fetch('/lessons')
+    .then(res => res.json());
+}
+
+export function fetchLessonContent(lessonId: number) {
+  return fetch(`/lesson/content/${lessonId}`)
     .then(res => res.json());
 }
 

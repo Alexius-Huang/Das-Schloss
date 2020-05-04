@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import QS from 'query-string';
 import Form, { TextField } from '../../components/Form';
-import { NewSection, APIState as CreationState } from '../../reducers/lessons.type';
+import { NewSection, APIState as CreationState } from '../../redux.reducers/lessons.type';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLessonSectionStart, createLessonSectionReset } from '../../actions/lessons';
-import { RootState } from '../../reducers';
+import { createLessonSectionStart, createLessonSectionReset } from '../../redux.actions/lessons';
+import { RootState } from '../../redux.reducers';
 import { useHistory } from 'react-router-dom';
 
 const NewLessonSection: React.FC = () => {

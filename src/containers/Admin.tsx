@@ -4,18 +4,18 @@ import APISuccessModal from './Modals/APISuccess';
 import * as AdminSection from './AdminSections';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { sectionsSelector, lessonFetchStateSelector } from '../selectors/Lessons';
-import { fetchLessonsIfNotExist } from '../actions/lessons';
-import { Lesson, LessonFetchState, Section, LessonType } from '../reducers/lessons.type';
+import { selectSections, selectLessonFetchState } from '../redux.selectors/Lessons';
+import { fetchLessonsIfNotExist } from '../redux.actions/lessons';
+import { Lesson, LessonFetchState, Section, LessonType } from '../redux.reducers/lessons.type';
 import useQueries, { AdminQueryParams } from '../hooks/useQueries';
-import { selectModal } from '../selectors/UI';
-import { Modals } from '../reducers/ui.type';
+import { selectModal } from '../redux.selectors/UI';
+import { Modals } from '../redux.reducers/ui.type';
 import '../scss/pages/Admin.scss';
 
 const Admin: React.FC = () => {
   const modal = useSelector(selectModal);
-  const sections = useSelector(sectionsSelector);
-  const fetchState = useSelector(lessonFetchStateSelector);
+  const sections = useSelector(selectSections);
+  const fetchState = useSelector(selectLessonFetchState);
   const fetchedComplete = fetchState === LessonFetchState.COMPLETED;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,7 +27,7 @@ const Admin: React.FC = () => {
     sections.find(s => s.id === lessonSectionID) as Section;
 
   let lessons: Lesson[] = [];
-  let targetLesson: Lesson = { id: NaN, type: LessonType.Conversation, title: '-', icon: 'check', content: '-' };
+  let targetLesson: Lesson = { id: NaN, type: LessonType.Conversation, title: '-', icon: 'check' /*, content: '-'*/ };
   if (fetchedComplete && lessonSectionID !== undefined) {
     lessons = sections.find(s => s.id === lessonSectionID)!.lessons;
 

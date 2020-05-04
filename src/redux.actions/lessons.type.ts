@@ -1,8 +1,8 @@
-import { Section, NewSection, UpdateLesson, Lesson } from '../reducers/lessons.type';
+import * as T from '../redux.reducers/lessons.type';
 
 export interface SetSections {
   type: 'SET_SECTIONS';
-  payload: Section[];
+  payload: T.Section[];
 }
 
 export interface FetchLessonsIfNotExist {
@@ -15,11 +15,30 @@ export interface FetchLessonsStart {
 
 export interface FetchLessonsSuccess {
   type: 'FETCH_LESSONS_SUCCESS';
-  payload: Section[];
+  payload: T.Section[];
 }
 
 export interface FetchLessonsError {
   type: 'FETCH_LESSONS_ERROR';
+  payload: string;
+}
+
+export interface FetchLessonContentReset {
+  type: 'FETCH_LESSON_CONTENT_RESET';
+}
+
+export interface FetchLessonContentStart {
+  type: 'FETCH_LESSON_CONTENT_START';
+  payload: { lessonId: number };
+}
+
+export interface FetchLessonContentSuccess {
+  type: 'FETCH_LESSON_CONTENT_SUCCESS';
+  payload: T.LessonContent;
+}
+
+export interface FetchLessonContentError {
+  type: 'FETCH_LESSON_CONTENT_ERROR';
   payload: string;
 }
 
@@ -29,12 +48,12 @@ export interface CreateLessonSectionReset {
 
 export interface CreateLessonSectionStart {
   type: 'CREATE_LESSON_SECTION_START';
-  payload: NewSection;
+  payload: T.NewSection;
 }
 
 export interface CreateLessonSectionSuccess {
   type: 'CREATE_LESSON_SECTION_SUCCESS';
-  payload: Section;
+  payload: T.Section;
 }
 
 export interface CreateLessonSectionError {
@@ -44,17 +63,22 @@ export interface CreateLessonSectionError {
 
 export interface UpdateLessonStart {
   type: 'UPDATE_LESSON_START';
-  payload: UpdateLesson;
+  payload: T.UpdateLesson;
 }
 
 export interface UpdateLessonSuccess {
   type: 'UPDATE_LESSON_SUCCESS';
-  payload: Lesson;
+  payload: T.Lesson;
 }
 
 export interface UpdateLessonError {
   type: 'UPDATE_LESSON_ERROR';
   payload: string;
+}
+
+export interface SelectLesson {
+  type: 'SELECT_LESSON';
+  payload: T.Lesson;
 }
 
 export type LessonsAction =
@@ -63,11 +87,16 @@ export type LessonsAction =
   FetchLessonsStart          |
   FetchLessonsSuccess        |
   FetchLessonsError          |
+  FetchLessonContentReset    |
+  FetchLessonContentStart    |
+  FetchLessonContentSuccess  |
+  FetchLessonContentError    |
   CreateLessonSectionReset   |
   CreateLessonSectionStart   |
   CreateLessonSectionSuccess |
   CreateLessonSectionError   |
   UpdateLessonStart          |
   UpdateLessonSuccess        |
-  UpdateLessonError
+  UpdateLessonError          |
+  SelectLesson
 ;

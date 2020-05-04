@@ -1,5 +1,5 @@
 import { all, takeLatest, put, call, select } from 'redux-saga/effects';
-import { fetchAllLessons, createLessonSection, updateLesson } from '../api/lessons';
+import * as LessonAPI from '../api/lessons';
 import * as LessonActions from '../redux.actions/lessons';
 import * as UIActions from '../redux.actions/ui';
 import { LessonFetchState, NewSection, UpdateLesson, Lesson } from '../redux.reducers/lessons.type';
@@ -15,10 +15,22 @@ function* fetchLessonsIfNotExistsTransaction() {
 
 function* fetchLatestLessonsTransaction() {
   try {
-    const response = yield call(fetchAllLessons);
+    const response = yield call(LessonAPI.fetchAllLessons);
     yield put(LessonActions.fetchLessonsSuccess(response));
   } catch (err) {
     yield put(LessonActions.fetchLessonsError(err));
+  }
+}
+
+function* fetchLessonContentTransaction() {
+  try {
+    const params = yield select(
+      (state: RootState) => state.Lessons.fetchLessonContent.params
+    );
+    const response = yield call(LessonAPI.fetchLessonContent, params.lessonId);
+    yield put(LessonActions.fetchLessonContentSuccess(response));
+  } catch (err) {
+    yield put(LessonActions.fetchLessonContentError(err));
   }
 }
 
@@ -27,7 +39,7 @@ function* createLessonSectionTransaction() {
     const newSection: NewSection = yield select(
       (state: RootState) => state.Lessons.createLessonSection.params
     );
-    const response = yield call(createLessonSection, newSection);
+    const response = yield call(LessonAPI.createLessonSection, newSection);
     yield put(LessonActions.createLessonSectionSuccess(response));
   } catch (err) {
     yield put(LessonActions.createLessonSectionError(err));
@@ -39,7 +51,7 @@ function* updateLessonTransaction() {
     const params: UpdateLesson = yield select(
       (state: RootState) => state.Lessons.updateLessonSection.params
     );
-    const response = yield call(updateLesson, params);
+    const response = yield call(LessonAPI.updateLesson, params);
     yield put(LessonActions.updateLessonSuccess(response));
 
     const updatedLesson: Lesson = yield select(
@@ -54,6 +66,7 @@ function* updateLessonTransaction() {
 function* watchLessons() {
   yield takeLatest('FETCH_LESSONS_IF_NOT_EXIST', fetchLessonsIfNotExistsTransaction);
   yield takeLatest('FETCH_LESSONS_START', fetchLatestLessonsTransaction);
+  yield takeLatest('FETCH_LESSON_CONTENT_START', fetchLessonContentTransaction);
   yield takeLatest('CREATE_LESSON_SECTION_START', createLessonSectionTransaction);
   yield takeLatest('UPDATE_LESSON_START', updateLessonTransaction);
 }

@@ -1,4 +1,4 @@
-import { ModalParams } from '../reducers/ui.type';
+import { ModalParams } from '../redux.reducers/ui.type';
 import * as A from './ui.type';
 
 export function openModal(params: ModalParams): A.OpenModal {

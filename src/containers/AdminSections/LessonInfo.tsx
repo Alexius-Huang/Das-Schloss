@@ -1,9 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Form, { TextField, OptionField, MarkdownField } from '../../components/Form';
-import { Lesson, LessonType, NewLesson } from '../../reducers/lessons.type';
+import { Lesson, LessonType, NewLesson } from '../../redux.reducers/lessons.type';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateLessonStart, fetchLessonContentReset, fetchLessonContentStart } from '../../redux.actions/lessons';
+import { selectLessonContentFetchState } from '../../redux.selectors/Lessons';
+import useOnce from '../../hooks/useOnce';
 import 'react-mde/lib/styles/css/react-mde-all.css';
-import { useDispatch } from 'react-redux';
-import { updateLessonStart } from '../../actions/lessons';
 
 interface LessonInfoProps {
   lesson: Lesson;
@@ -12,13 +14,21 @@ interface LessonInfoProps {
 const LessonInfo: React.FC<LessonInfoProps> = (props) => {
   const { lesson } = props;
   const dispatch = useDispatch();
+  const lessonContent = useSelector(selectLessonContentFetchState);
   const [title, setTitle] = useState(lesson.title);
   const [type, setType] = useState(lesson.type);
-  const [content, setContent] = useState(lesson.content);
+  const [content, setContent] = useState('Loading...');
+
+  useOnce(() => {
+    dispatch(fetchLessonContentReset());
+    dispatch(fetchLessonContentStart(lesson.id));
+  });
 
   useEffect(() => {
-    setTitle(lesson.title);
-  }, [lesson.title]);
+    if (lessonContent.instance) {
+      setContent(lessonContent.instance.content);
+    }
+  }, [lessonContent.instance]);
 
   const handleSubmit = function(params: NewLesson) {
     dispatch(updateLessonStart({ id: lesson.id, params }));

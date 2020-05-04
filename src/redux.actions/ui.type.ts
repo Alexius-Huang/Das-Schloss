@@ -1,4 +1,4 @@
-import { ModalParams } from '../reducers/ui.type';
+import { ModalParams } from '../redux.reducers/ui.type';
 
 export interface OpenModal {
   type: 'OPEN_MODAL';

@@ -25,6 +25,11 @@ CREATE TABLE IF NOT EXISTS lessons (
   lesson_section_id INTEGER REFERENCES lesson_sections(id) ON DELETE CASCADE,
   type lesson_type NOT NULL,
   title VARCHAR(100) NOT NULL,
-  icon VARCHAR(100) DEFAULT 'check',
+  icon VARCHAR(100) DEFAULT 'check'
+);
+
+CREATE TABLE IF NOT EXISTS lesson_contents (
+  id SERIAL PRIMARY KEY,
+  lesson_id INTEGER REFERENCES lessons(id) ON DELETE CASCADE,
   content TEXT DEFAULT ''
 );

@@ -8,8 +8,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
-import RootReducer from './reducers';
-import RootSaga from './saga';
+import RootReducer from './redux.reducers';
+import RootSaga from './redux.saga';
 
 import * as serviceWorker from './serviceWorker';
 import './index.scss';

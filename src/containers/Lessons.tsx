@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import CardGroup from '../components/CardGroup';
 import Card from '../components/Card';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers';
-import { LessonType } from '../reducers/lessons.type';
-import { fetchLessonsIfNotExist } from '../actions/lessons';
+import { RootState } from '../redux.reducers';
+import { LessonType } from '../redux.reducers/lessons.type';
+import { fetchLessonsIfNotExist, selectLesson } from '../redux.actions/lessons';
 import '../scss/pages/Lessons.scss';
 
 const lessonTypeMap = new Map([
@@ -39,7 +39,10 @@ const Lessons: React.FC = () => {
                     classnames={`card--${lessonTypeMap.get(lesson.type)}`}
                     title={lesson.title}
                     icon={lesson.icon}
-                    handleClick={(id) => history.push(`/lesson/${id}`)}
+                    handleClick={(id) => {
+                      dispatch(selectLesson(lesson));
+                      history.push(`/lesson/${id}`);
+                    }}
                   />
                 ))
               }

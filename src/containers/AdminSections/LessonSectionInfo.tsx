@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import Form, { TextField } from '../../components/Form';
-import { Section } from '../../reducers/lessons.type';
+import { Section } from '../../redux.reducers/lessons.type';
 
 interface LessonSectionInfoProps {
   section: Section;

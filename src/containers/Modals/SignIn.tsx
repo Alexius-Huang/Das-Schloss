@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../../components/Modal';
 import Form, { TextField } from '../../components/Form';
-import { closeModal } from '../../actions/ui';
+import { closeModal } from '../../redux.actions/ui';
 import { useDispatch } from 'react-redux';
 
 const SignInModal: React.FC = () => {

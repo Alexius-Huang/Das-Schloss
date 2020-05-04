@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../../components/Modal';
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../actions/ui';
+import { closeModal } from '../../redux.actions/ui';
 
 interface APISuccessModalProps {
   action: 'Update' | 'Create' | 'Delete';

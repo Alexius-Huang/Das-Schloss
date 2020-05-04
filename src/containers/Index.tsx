@@ -2,9 +2,9 @@ import React from 'react';
 import SignInModal from './Modals/SignIn';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectModal } from '../selectors/UI';
-import { openModal } from '../actions/ui';
-import { Modals } from '../reducers/ui.type';
+import { selectModal } from '../redux.selectors/UI';
+import { openModal } from '../redux.actions/ui';
+import { Modals } from '../redux.reducers/ui.type';
 import '../scss/pages/Index.scss';
 
 const Index: React.FC = () => {

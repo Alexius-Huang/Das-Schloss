@@ -24,7 +24,6 @@ export type Lesson = {
   type: LessonType;
   title: string;
   icon: AvailableIcons;
-  content: string;
 };
 
 export type NewLesson = {
@@ -35,6 +34,11 @@ export type NewLesson = {
 }
 
 export type UpdateLesson = { id: number; params: Partial<NewLesson> };
+
+export type LessonContent = {
+  content: string;
+  lesson: Lesson;
+}
 
 export type Section = {
   id: number;
@@ -50,7 +54,7 @@ export type NewSection = {
 
 export type UpdateSection = { id: number; params: Partial<NewSection> };
 
-interface APITransaction<Tinstance, Tparams, Terror = string> {
+interface APITransaction<Tinstance, Tparams = null, Terror = string> {
   state: APIState;
   instance: null | Tinstance;
   params: null | Tparams;
@@ -59,9 +63,11 @@ interface APITransaction<Tinstance, Tparams, Terror = string> {
 
 export type CreateLessonSectionTransaction = APITransaction<Section, NewSection>;
 export type UpdateLessonTransaction = APITransaction<Lesson, UpdateLesson>;
+export type FetchLessonContentTransaction = APITransaction<LessonContent, { lessonId: number }>;
 export type LessonTransactions =
   CreateLessonSectionTransaction |
-  UpdateLessonTransaction
+  UpdateLessonTransaction |
+  FetchLessonContentTransaction
 ;
 
 export interface LessonsState {
@@ -69,5 +75,8 @@ export interface LessonsState {
   fetchState: LessonFetchState;
   createLessonSection: CreateLessonSectionTransaction;
   updateLessonSection: UpdateLessonTransaction;
+  fetchLessonContent: FetchLessonContentTransaction;
   error: null | string;
+
+  selectedLesson: null | Lesson;
 }

@@ -1,4 +1,4 @@
-import { LessonsAction } from '../actions/lessons.type';
+import { LessonsAction } from '../redux.actions/lessons.type';
 import * as T from './lessons.type';
 
 function transaction<U extends T.LessonTransactions>(params?: Partial<U>) {
@@ -13,9 +13,12 @@ function transaction<U extends T.LessonTransactions>(params?: Partial<U>) {
 const defaultState: T.LessonsState = {
   sections: [],
   fetchState: T.LessonFetchState.INCOMPLETE,
-  error: null,
   createLessonSection: transaction<T.CreateLessonSectionTransaction>(),
   updateLessonSection: transaction<T.UpdateLessonTransaction>(),
+  fetchLessonContent: transaction<T.FetchLessonContentTransaction>(),
+  error: null,
+
+  selectedLesson: null,
 };
 
 export default function (state = defaultState, action: LessonsAction): T.LessonsState {
@@ -28,6 +31,33 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
       return { ...state, fetchState: T.LessonFetchState.COMPLETED, sections: action.payload };
     case 'FETCH_LESSONS_ERROR':
       return { ...state, fetchState: T.LessonFetchState.ERROR, error: action.payload };
+
+    case 'FETCH_LESSON_CONTENT_RESET':
+      return { ...state, fetchLessonContent: transaction<T.FetchLessonContentTransaction>() };
+    case 'FETCH_LESSON_CONTENT_START':
+      return {
+        ...state,
+        fetchLessonContent: transaction<T.FetchLessonContentTransaction>({
+          state: T.APIState.PROCESSING,
+          params: action.payload,
+        }),
+      };
+    case 'FETCH_LESSON_CONTENT_SUCCESS':
+      return {
+        ...state,
+        fetchLessonContent: transaction<T.FetchLessonContentTransaction>({
+          state: T.APIState.STATIC,
+          instance: action.payload
+        }),
+      };
+    case 'FETCH_LESSON_CONTENT_ERROR':
+      return {
+        ...state,
+        fetchLessonContent: transaction<T.FetchLessonContentTransaction>({
+          state: T.APIState.ERROR,
+          error: action.payload
+        })
+      };
 
     case 'CREATE_LESSON_SECTION_RESET':
       return {
@@ -93,6 +123,9 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
           error: action.payload,
         }),
       };
+
+    case 'SELECT_LESSON':
+      return { ...state, selectedLesson: action.payload };
     default:
       return state;
   }

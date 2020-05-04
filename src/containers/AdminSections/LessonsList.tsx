@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import QS from 'query-string';
 import Card from '../../components/Card';
 import { useHistory } from 'react-router-dom';
-import { Lesson, LessonType } from '../../reducers/lessons.type';
+import { Lesson, LessonType } from '../../redux.reducers/lessons.type';
 import useQueries, { AdminQueryParams } from '../../hooks/useQueries';
 
 interface LessonsListProps {

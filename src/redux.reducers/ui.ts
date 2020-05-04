@@ -1,4 +1,4 @@
-import { UIAction } from '../actions/ui.type';
+import { UIAction } from '../redux.actions/ui.type';
 import * as T from './ui.type';
 
 const defaultState: T.UIState = {

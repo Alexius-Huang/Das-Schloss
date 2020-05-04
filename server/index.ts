@@ -38,15 +38,34 @@ const LessonModel = {
   createLesson(params: T.NewLesson, section: T.LessonSection) {
     return this.db.insert({ ...params, lesson_section_id: section.id }).into('lessons').returning('*');
   },
+  createLessonContent(params: T.NewLessonContent, lesson: T.Lesson) {
+    return this.db.insert({ ...params, lesson_id: lesson.id }).into('lesson_contents').returning('*');
+  },
   updateLessonSection(id: number, params: T.UpdateLessonSection) {
     return this.db.from('lesson_sections').where({ id }).update(params).returning('*');
   },
   updateLesson(id: number, params: T.UpdateLesson) {
     return this.db.from('lessons').where({ id }).update(params).returning('*');
   },
+  // updateLessonContent(id: number, params: T.UpdateLessonContent) {
+  //   return this.db.from('lesson_contents').where({ id }).update(params).returning('*');
+  // },
+  updateLessonContentFromLesson(id: number, params: T.UpdateLessonContent) {
+    return this.db.from('lesson_contents').where({ lesson_id: id }).update(params).returning('*');
+  },
   allLessonSections() {
     return this.db.select('*').from('lesson_sections');
   },
+  lessonContentFromLesson(id: number) {
+    return this.db.raw(`
+      SELECT
+        lc.id, lc.content, json_agg(lessons) AS lesson
+      FROM lesson_contents lc
+      INNER JOIN lessons ON lessons.id = lc.lesson_id
+      WHERE lc.lesson_id = ${id}
+      GROUP BY lc.id;
+    `).then(res => res.rows);
+  }
 };
 
 app.get('/lessons', async (req, res) => {
@@ -66,6 +85,18 @@ app.get('/lessons', async (req, res) => {
   }
 });
 
+app.get('/lesson/content/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    const lessonContents: T.LessonContent[] = await LessonModel.lessonContentFromLesson(id);
+    const result: T.LessonContent = lessonContents[0];
+    result.lesson = result.lesson[0];
+    res.status(200).json(lessonContents[0]);
+  } catch {
+    res.status(400).json('Fetch lesson content error...');
+  }
+});
+
 app.post('/lesson-section', async (req, res) => {
   try {
     const result: T.LessonSection = await db.transaction(async trx => {
@@ -76,11 +107,15 @@ app.post('/lesson-section', async (req, res) => {
       const newLesson: T.NewLesson = {
         title: `New lesson from ${createdSection.title}`,
         type: T.LessonType.Conversation,
-        content: 'Setup content for new lesson...',
       };
       const result2: T.Lesson[] = await LessonModel.createLesson(newLesson, createdSection).transacting(trx);
       const createdLesson: T.Lesson = { ...result2[0] };
       createdSection.lessons.push(createdLesson);
+
+      const newLessonContent: T.NewLessonContent = {
+        content: 'Setup content for new lesson...',
+      };
+      await LessonModel.createLessonContent(newLessonContent, createdLesson).transacting(trx);
 
       return createdSection;
     });
@@ -94,9 +129,19 @@ app.post('/lesson-section', async (req, res) => {
 app.put('/lesson/:id', async (req, res) => {
   try {
     const id = parseInt(req.params.id, 10);
-    const updateLessonData: T.UpdateLesson = req.body;
-    const result: T.Lesson[] = await LessonModel.updateLesson(id, updateLessonData);
-    res.status(200).json(result[0]);
+    const data: T.UpdateLesson & T.UpdateLessonContent = req.body;
+    const { content, ...updateLessonData } = data;
+    const updateLessonContentData = { content };
+
+    const result: T.Lesson = await db.transaction(async trx => {
+      const lessons: T.Lesson[] = await LessonModel.updateLesson(id, updateLessonData).transacting(trx);
+      const lesson = lessons[0];
+
+      await LessonModel.updateLessonContentFromLesson(id, updateLessonContentData).transacting(trx);
+      return lesson;
+    });
+
+    res.status(200).json(result);
   } catch {
     res.status(400).json('Some error occurs on updating lesson...');
   }
