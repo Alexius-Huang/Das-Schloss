@@ -1,8 +1,8 @@
-import { Modals } from '../reducers/ui.type';
+import { ModalParams } from '../reducers/ui.type';
 
 export interface OpenModal {
   type: 'OPEN_MODAL';
-  payload: Modals;
+  payload: ModalParams;
 }
 
 export interface CloseModal {

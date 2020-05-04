@@ -1,5 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
 import QS from 'query-string';
+import APISuccessModal from './Modals/APISuccess';
 import * as AdminSection from './AdminSections';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -7,9 +8,12 @@ import { sectionsSelector, lessonFetchStateSelector } from '../selectors/Lessons
 import { fetchLessonsIfNotExist } from '../actions/lessons';
 import { Lesson, LessonFetchState, Section, LessonType } from '../reducers/lessons.type';
 import useQueries, { AdminQueryParams } from '../hooks/useQueries';
+import { selectModal } from '../selectors/UI';
+import { Modals } from '../reducers/ui.type';
 import '../scss/pages/Admin.scss';
 
 const Admin: React.FC = () => {
+  const modal = useSelector(selectModal);
   const sections = useSelector(sectionsSelector);
   const fetchState = useSelector(lessonFetchStateSelector);
   const fetchedComplete = fetchState === LessonFetchState.COMPLETED;
@@ -61,6 +65,8 @@ const Admin: React.FC = () => {
 
   return (
     <div className="page page__admin page--960">
+      {modal.type === Modals.APISuccess && <APISuccessModal {...modal} />}
+
       <AdminSection.LessonSections
         sections={sections}
         onInspectSection={handleInspectLessonSection}

@@ -1,9 +1,11 @@
 import { all, takeLatest, put, call, select } from 'redux-saga/effects';
 import { fetchAllLessons, createLessonSection, updateLesson } from '../api/lessons';
 import * as LessonActions from '../actions/lessons';
-import { LessonFetchState, NewSection, UpdateLesson } from '../reducers/lessons.type';
+import * as UIActions from '../actions/ui';
+import { LessonFetchState, NewSection, UpdateLesson, Lesson } from '../reducers/lessons.type';
 import { lessonFetchStateSelector } from '../selectors/Lessons';
 import { RootState } from '../reducers';
+import { Modals } from '../reducers/ui.type';
 
 function* fetchLessonsIfNotExistsTransaction() {
   const fetchState = yield select(lessonFetchStateSelector);
@@ -39,6 +41,11 @@ function* updateLessonTransaction() {
     );
     const response = yield call(updateLesson, params);
     yield put(LessonActions.updateLessonSuccess(response));
+
+    const updatedLesson: Lesson = yield select(
+      (state: RootState) => state.Lessons.updateLessonSection.instance
+    );
+    yield put(UIActions.openModal({ type: Modals.APISuccess, action: 'Update', name: updatedLesson.title }));
   } catch (err) {
     yield put(LessonActions.updateLessonError(err));
   }

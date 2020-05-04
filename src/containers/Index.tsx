@@ -1,8 +1,8 @@
 import React from 'react';
-import SignInModal from './Index.SIgnInModal';
+import SignInModal from './Modals/SignIn';
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../reducers';
+import { selectModal } from '../selectors/UI';
 import { openModal } from '../actions/ui';
 import { Modals } from '../reducers/ui.type';
 import '../scss/pages/Index.scss';
@@ -10,15 +10,11 @@ import '../scss/pages/Index.scss';
 const Index: React.FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const activeModal = useSelector((state: RootState) => state.UI.activeModal);
-
-  const handleTransitionToLessonsPage = () => {
-    history.push('/lessons');
-  };
+  const modal = useSelector(selectModal);
 
   return (
     <div className="page page__index">
-      {activeModal === Modals.SignIn && <SignInModal />}
+      {modal.type === Modals.SignIn && <SignInModal />}
 
       <header className="header">
         <h1 className="header__title">Das Schloss</h1>
@@ -27,12 +23,12 @@ const Index: React.FC = () => {
         <div className="header__button-group">
           <button
             className="button-rect"
-            onClick={handleTransitionToLessonsPage}
+            onClick={() => history.push('/lessons')}
           >Try it now!</button>
 
           <button
             className="button-rect button-rect--light"
-            onClick={() => dispatch(openModal(Modals.SignIn))}
+            onClick={() => dispatch(openModal({ type: Modals.SignIn }))}
           >
             Sign In
           </button>

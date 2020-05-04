@@ -71,11 +71,15 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
     case 'UPDATE_LESSON_SUCCESS':
       const lesson = action.payload;
 
-      // TODO: Update lesson in the section!
-      console.log(lesson);
+      // TODO: Find ways to refactor this
+      const sections = [...state.sections];
+      const section = sections.find(s => s.id === (lesson as any).lesson_section_id) as T.Section;
+      const lessonId = section.lessons.findIndex(l => l.id === lesson.id);
+      section.lessons[lessonId] = lesson;
 
       return {
         ...state,
+        sections,
         updateLessonSection: transaction<T.UpdateLessonTransaction>({
           state: T.APIState.STATIC,
           instance: lesson,

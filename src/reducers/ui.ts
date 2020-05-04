@@ -2,15 +2,15 @@ import { UIAction } from '../actions/ui.type';
 import * as T from './ui.type';
 
 const defaultState: T.UIState = {
-  activeModal: null,
+  modal: { type: null },
 };
 
 export default function (state = defaultState, action: UIAction): T.UIState {
   switch (action.type) {
     case 'OPEN_MODAL':
-      return { ...state, activeModal: action.payload };
+      return { ...state, modal: action.payload };
     case 'CLOSE_MODAL':
-      return { ...state, activeModal: null };
+      return { ...state, modal: { type: null } };
     default:
       return state;
   }

@@ -1,10 +1,10 @@
-import { Modals } from '../reducers/ui.type';
+import { ModalParams } from '../reducers/ui.type';
 import * as A from './ui.type';
 
-export function openModal(modal: Modals): A.OpenModal {
+export function openModal(params: ModalParams): A.OpenModal {
   return {
     type: 'OPEN_MODAL',
-    payload: modal,
+    payload: params,
   };
 }
 

@@ -71,3 +71,15 @@ div.page__admin > section.lessons {
     margin-bottom: 2rem;
   }
 }
+
+.modal__api-success > .modal__content {
+  padding: 2rem 2rem 3rem 2rem;
+
+  h1.api-success__header {
+    font-size: 2.4rem;
+  }
+
+  p.api-success__message {
+    font-size: 1.6rem;
+  }
+}
