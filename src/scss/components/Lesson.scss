@@ -1,0 +1,73 @@
+@import '../variables.scss';
+
+div.dialogue {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem 1rem 3rem;
+
+  > div.dialogue__wrapper {
+    display: inline-block;
+    color: $night-1;
+
+    > p.dialogue__content,
+    > p.dialogue__translation {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    > p.dialogue__content {
+      background-color: $snow-1;
+      padding-top: .8rem;
+      padding-bottom: .5rem;
+      border-top-left-radius: .3rem;
+      border-top-right-radius: .3rem;
+    }
+
+    > p.dialogue__translation {
+      background-color: $frost-4;
+      color: $snow-1;
+      font-size: 1.4rem;
+      padding-top: .5rem;
+      padding-bottom: .8rem;
+      border-bottom-right-radius: .3rem;
+      position: relative;
+
+      &:before {
+        position: absolute;
+        content: '';
+        left: -1.4rem;
+        bottom: 0;
+        border-left: 1.5rem solid transparent;
+        border-right: 0rem solid transparent;
+        border-bottom: 1.5rem solid $frost-4;
+      }
+    }
+  }
+
+  + div.dialogue {
+    padding: 1rem 3rem 1rem 1.5rem;
+    text-align: right;
+  }
+
+  + div.dialogue > div.dialogue__wrapper {
+    text-align: left;
+
+    > p.dialogue__translation {
+      border-bottom-left-radius: .3rem;
+      border-bottom-right-radius: 0rem;  
+    }
+
+    > p.dialogue__translation:before {
+      display: none;
+    }
+
+    > p.dialogue__translation:after {
+      position: absolute;
+      content: '';
+      right: -1.4rem;
+      bottom: 0;
+      border-right: 1.5rem solid transparent;
+      border-left: 0rem solid transparent;
+      border-bottom: 1.5rem solid $frost-4;
+    }
+  }
+}

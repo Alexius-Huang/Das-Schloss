@@ -66,6 +66,17 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
             bind={setType}
           />
 
+          <h2 className="lessons__edit-lesson-content-header">Edit Lesson Content</h2>
+          <div className="lessons__markdown-editor-button-group">
+            <button
+              className="button button-rect button-rect--sm button-rect--warning"
+              onClick={(event) => {
+                event.preventDefault();
+                setContent(`${content}\n<Dialogue translation=""></Dialogue>`);
+              }}
+            >Dialogue (Ctrl + D)</button>
+          </div>
+          
           <MarkdownField
             title="Content"
             name="content"

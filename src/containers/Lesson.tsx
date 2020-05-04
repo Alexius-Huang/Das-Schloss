@@ -1,20 +1,12 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import useOnce from '../hooks/useOnce';
+import { Dialogue } from '../components/Lesson';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLessonContentReset, fetchLessonContentStart } from '../redux.actions/lessons';
 import { useRouteMatch } from 'react-router-dom';
 import { selectLessonContentFetchState } from '../redux.selectors/Lessons';
 import '../scss/pages/Lesson.scss';
-
-const Dialogue: React.FC<{ translation: string; }> = (props) => {
-  return (
-    <div className="dialogue">
-      <h2>{props.translation}</h2>
-      <p>{props.children}</p>
-    </div>
-  );
-};
 
 const overrides = {
   Dialogue: { component: Dialogue },

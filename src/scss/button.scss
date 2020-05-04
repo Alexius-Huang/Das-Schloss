@@ -56,6 +56,12 @@ button {
     }
   }
 
+  &.button-rect--sm {
+    padding: .8rem 1.2rem;
+    font-size: 1.4rem;
+    border-radius: .2rem;
+  }
+
   &.button-rect--success {
     background-color: darken($btn-success-color, 15%);
     &:hover {

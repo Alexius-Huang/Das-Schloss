@@ -1,5 +1,11 @@
 @import '../variables.scss';
 
 div.page__lesson {
-  padding: 3rem 0;
+  padding: 3rem 2rem;
+
+  div.lesson__content > div {
+    > p + p {
+      margin-top: 1rem;
+    }
+  }  
 }

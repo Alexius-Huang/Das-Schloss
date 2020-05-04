@@ -53,18 +53,29 @@ div.page__admin > section.lessons {
   width: 70%;
   padding-left: 2rem;
 
-  > h1.lessons__header,
-  > h2.lessons__header {
+  h1.lessons__header,
+  h2.lessons__header {
     font-size: 2.4rem;
     margin-bottom: 1rem;
   }
 
-  > h2.lessons__header {
+  h2.lessons__header {
     font-size: 1.8rem;
   }
 
   > div.lessons__section-info {
     margin-bottom: 2rem;
+  }
+
+  > div.lessons__lesson-info {
+    h2.lessons__edit-lesson-content-header {
+      font-size: 1.8rem;
+      margin-top: 3rem;
+    }
+
+    div.lessons__markdown-editor-button-group {
+      margin: 1rem 0;
+    }
   }
 
   > div.lessons__dashboard > ul.lessons__card-list > li.card {
