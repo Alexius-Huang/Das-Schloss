@@ -1,9 +1,9 @@
 import express from 'express';
 import knex from 'knex';
-// import bcrypt from 'bcrypt';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import * as T from './models/Lessons.type';
+import * as APIs from './apis';
+// import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -30,133 +30,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const LessonModel = {
-  db,
-  createLessonSection(params: T.NewLessonSection) {
-    return this.db.insert({ ...params }).into('lesson_sections').returning('*');
-  },
-  createLesson(params: T.NewLesson, section: T.LessonSection) {
-    return this.db.insert({ ...params, lesson_section_id: section.id }).into('lessons').returning('*');
-  },
-  createLessonContent(params: T.NewLessonContent, lesson: T.Lesson) {
-    return this.db.insert({ ...params, lesson_id: lesson.id }).into('lesson_contents').returning('*');
-  },
-  updateLessonSection(id: number, params: T.UpdateLessonSection) {
-    return this.db.from('lesson_sections').where({ id }).update(params).returning('*');
-  },
-  updateLesson(id: number, params: T.UpdateLesson) {
-    return this.db.from('lessons').where({ id }).update(params).returning('*');
-  },
-  // updateLessonContent(id: number, params: T.UpdateLessonContent) {
-  //   return this.db.from('lesson_contents').where({ id }).update(params).returning('*');
-  // },
-  updateLessonContentFromLesson(id: number, params: T.UpdateLessonContent) {
-    return this.db.from('lesson_contents').where({ lesson_id: id }).update(params).returning('*');
-  },
-  allLessonSections() {
-    return this.db.select('*').from('lesson_sections');
-  },
-  lessonContentFromLesson(id: number) {
-    return this.db.raw(`
-      SELECT
-        lc.id, lc.content, json_agg(lessons) AS lesson
-      FROM lesson_contents lc
-      INNER JOIN lessons ON lessons.id = lc.lesson_id
-      WHERE lc.lesson_id = ${id}
-      GROUP BY lc.id;
-    `).then(res => res.rows);
-  }
-};
-
-app.get('/lessons', async (req, res) => {
-  try {
-    const lessons: T.LessonSection[] = await db.raw(`
-      SELECT
-        ls.id, ls.title, ls.icon, json_agg(lessons ORDER BY lessons.id ASC) AS lessons
-      FROM lesson_sections ls
-      INNER JOIN lessons ON lessons.lesson_section_id = ls.id
-      GROUP BY ls.id
-      ORDER BY ls.id ASC;
-    `).then(res => res.rows);
-
-    res.status(200).json(lessons);
-  } catch {
-    res.status(400).json('Fetch lessons error...');
-  }
-});
-
-app.get('/lesson/content/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const lessonContents: T.LessonContent[] = await LessonModel.lessonContentFromLesson(id);
-    const result: T.LessonContent = lessonContents[0];
-    result.lesson = result.lesson[0];
-    res.status(200).json(lessonContents[0]);
-  } catch {
-    res.status(400).json('Fetch lesson content error...');
-  }
-});
-
-app.post('/lesson-section', async (req, res) => {
-  try {
-    const result: T.LessonSection = await db.transaction(async trx => {
-      const newSection: T.NewLessonSection = req.body;
-      const result1: T.LessonSection[] = await LessonModel.createLessonSection(newSection).transacting(trx);
-      const createdSection: T.LessonSection = { ...result1[0], lessons: [] };
-
-      const newLesson: T.NewLesson = {
-        title: `New lesson from ${createdSection.title}`,
-        type: T.LessonType.Conversation,
-      };
-      const result2: T.Lesson[] = await LessonModel.createLesson(newLesson, createdSection).transacting(trx);
-      const createdLesson: T.Lesson = { ...result2[0] };
-      createdSection.lessons.push(createdLesson);
-
-      const newLessonContent: T.NewLessonContent = {
-        content: 'Setup content for new lesson...',
-      };
-      await LessonModel.createLessonContent(newLessonContent, createdLesson).transacting(trx);
-
-      return createdSection;
-    });
-
-    res.status(200).json(result);
-  } catch {
-    res.status(400).json('Create new lesson-section error...');
-  }
-});
-
-app.put('/lesson/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const data: T.UpdateLesson & T.UpdateLessonContent = req.body;
-    const { content, ...updateLessonData } = data;
-    const updateLessonContentData = { content };
-
-    const result: T.Lesson = await db.transaction(async trx => {
-      const lessons: T.Lesson[] = await LessonModel.updateLesson(id, updateLessonData).transacting(trx);
-      const lesson = lessons[0];
-
-      await LessonModel.updateLessonContentFromLesson(id, updateLessonContentData).transacting(trx);
-      return lesson;
-    });
-
-    res.status(200).json(result);
-  } catch {
-    res.status(400).json('Some error occurs on updating lesson...');
-  }
-});
-
-app.put('/lesson-section/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id, 10);
-    const updateLessonSectionData: T.UpdateLessonSection = req.body;
-    const result: T.LessonSection[] = await LessonModel.updateLessonSection(id, updateLessonSectionData);
-    res.status(200).json(result[0]);
-  } catch {
-    res.status(400).json('Some error occurs on updating lesson...');
-  }
-});
+APIs.Lessons(app, db);
 
 // Serve static files
 // app.use(express.static(path.join(__dirname, 'build')));
