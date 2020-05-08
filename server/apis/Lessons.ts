@@ -23,7 +23,7 @@ export default function (app: express.Express, db: Knex) {
     }
   });
   
-  app.get('/lesson/content/:id', async (req, res) => {
+  app.get('/lesson/:id/content', async (req, res) => {
     try {
       const id = parseInt(req.params.id, 10);
       const lessonContents: T.LessonContent[] = await model.lessonContentFromLesson(id);
@@ -63,28 +63,7 @@ export default function (app: express.Express, db: Knex) {
       res.status(400).json('Create new lesson-section error...');
     }
   });
-  
-  app.put('/lesson/:id', async (req, res) => {
-    try {
-      const id = parseInt(req.params.id, 10);
-      const data: T.UpdateLesson & T.UpdateLessonContent = req.body;
-      const { content, ...updateLessonData } = data;
-      const updateLessonContentData = { content };
-  
-      const result: T.Lesson = await db.transaction(async trx => {
-        const lessons: T.Lesson[] = await model.updateLesson(id, updateLessonData).transacting(trx);
-        const lesson = lessons[0];
-  
-        await model.updateLessonContentFromLesson(id, updateLessonContentData).transacting(trx);
-        return lesson;
-      });
-  
-      res.status(200).json(result);
-    } catch {
-      res.status(400).json('Some error occurs on updating lesson...');
-    }
-  });
-  
+
   app.put('/lesson-section/:id', async (req, res) => {
     try {
       const id = parseInt(req.params.id, 10);
@@ -94,5 +73,26 @@ export default function (app: express.Express, db: Knex) {
     } catch {
       res.status(400).json('Some error occurs on updating lesson...');
     }
-  });    
+  });
+
+  app.put('/lesson/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const data: T.UpdateLesson & T.UpdateLessonContent = req.body;
+      const { content, ...updateLessonData } = data;
+      const updateLessonContentData = { content };
+
+      const result: T.Lesson = await db.transaction(async trx => {
+        const lessons: T.Lesson[] = await model.updateLesson(id, updateLessonData).transacting(trx);
+        const lesson = lessons[0];
+  
+        content !== undefined && await model.updateLessonContentFromLesson(id, updateLessonContentData).transacting(trx);
+        return lesson;
+      });
+  
+      res.status(200).json(result);
+    } catch {
+      res.status(400).json('Some error occurs on updating lesson...');
+    }
+  });
 }

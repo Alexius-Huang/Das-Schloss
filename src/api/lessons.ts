@@ -6,7 +6,7 @@ export function fetchAllLessons() {
 }
 
 export function fetchLessonContent(lessonId: number) {
-  return fetch(`/lesson/content/${lessonId}`)
+  return fetch(`/lesson/${lessonId}/content`)
     .then(res => res.json());
 }
 

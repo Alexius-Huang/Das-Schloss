@@ -31,6 +31,7 @@ app.use((req, res, next) => {
 });
 
 APIs.Lessons(app, db);
+APIs.Vocabulary(app, db);
 
 // Serve static files
 // app.use(express.static(path.join(__dirname, 'build')));

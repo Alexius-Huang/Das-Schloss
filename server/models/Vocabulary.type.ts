@@ -35,13 +35,21 @@ export interface NewVerb {
   name: string;
   translation: string;
   info?: string;
-  IPC: IndicativePresentConjugation;
 }
 
 // export type UpdateVerb;
 
 export interface IndicativePresentConjugation {
   id: string;
+  firstPerson: string;
+  secondPerson: string;
+  thirdPerson: string;
+  firstPersonPlural: string;
+  secondPersonPlural: string;
+  thirdPersonPlural: string;
+}
+
+export interface NewIndicativePersentConjugation {
   firstPerson: string;
   secondPerson: string;
   thirdPerson: string;

@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS vocabulary_verbs (
 
 CREATE TABLE IF NOT EXISTS indicative_present_conjugations (
   id SERIAL PRIMARY KEY,
-  verb_id INTEGER REFERENCES vocabulary_verbs,
+  verb_id INTEGER REFERENCES vocabulary_verbs(id) ON DELETE CASCADE,
   first_person VARCHAR(100) NOT NULL,
   second_person VARCHAR(100) NOT NULL,
   third_person VARCHAR(100) NOT NULL,
