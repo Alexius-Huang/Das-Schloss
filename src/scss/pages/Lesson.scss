@@ -3,9 +3,61 @@
 div.page__lesson {
   padding: 3rem 2rem;
 
+  > h1.lesson__header {
+    font-size: 3.6rem;
+    margin-bottom: 2rem;
+  }
+
   div.lesson__content > div {
     > p + p {
       margin-top: 1rem;
     }
-  }  
+
+    > h1, h2, h3, h4, h5, h6 {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    em {
+      font-style: normal;
+      font-weight: bolder;
+      color: $aurora-red;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border: none;
+    margin: 2rem auto;
+    text-align: center;
+
+    > thead > tr > th {
+      background-color: $frost-4;
+      color: $snow-1;
+
+      + th {
+        border-left: .1rem solid $frost-3;
+      }
+    }
+
+    > tbody > tr > td {
+      background-color: $snow-1;
+      color: $night-1;
+      + td {
+        border-left: .1rem solid $frost-3;
+      }
+    }
+
+    > thead > tr > th,
+    > tbody > tr > td {
+      padding: .8rem 1rem;
+      font-size: 1.4rem;
+      text-align: center;
+      margin: 0;
+    }
+
+    > tbody > tr:nth-child(even) > td {
+      background-color: $snow-2;
+    }
+  }
 }

@@ -43,12 +43,12 @@ div.dialogue {
     }
   }
 
-  + div.dialogue {
+  &.dialogue--right {
     padding: 1rem 3rem 1rem 1.5rem;
     text-align: right;
   }
 
-  + div.dialogue > div.dialogue__wrapper {
+  &.dialogue--right > div.dialogue__wrapper {
     text-align: left;
 
     > p.dialogue__translation {
@@ -69,5 +69,56 @@ div.dialogue {
       border-left: 0rem solid transparent;
       border-bottom: 1.5rem solid $frost-4;
     }
+  }
+}
+
+div.hint {
+  margin: 2rem 0;
+  > p.hint__title {
+    padding: 1rem 1.2rem .5rem 1.2rem;
+    font-size: 1.8rem;
+    background-color: $frost-4;
+    margin: 0;
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+  }
+
+  > div.hint__content {
+    padding: 1rem 1.2rem;
+    background-color: $snow-1;
+    color: $night-1;
+    border-bottom-left-radius: .2rem;
+    border-bottom-right-radius: .2rem;
+
+    > p + p {
+      margin-top: 1rem;
+    }
+  }
+}
+
+div.vocabulary-noun {
+  > p.vocabulary-noun__value {
+    border-top-left-radius: .2rem;
+    border-top-right-radius: .2rem;
+    padding: .5rem 1rem;
+  }
+  > p.vocabulary-noun__translation {
+    border-bottom-left-radius: .2rem;
+    border-bottom-right-radius: .2rem;
+    padding: .3rem 1rem;
+    font-size: 1.4rem;
+  }
+  &.vocabulary-noun--m > p.vocabulary-noun__value {
+    background-color: $frost-4;
+  }
+  &.vocabulary-noun--f > p.vocabulary-noun__value {
+    background-color: $aurora-red;
+  }
+  &.vocabulary-noun--n > p.vocabulary-noun__value {
+    background-color: darken($aurora-green, 10%);
+  }
+  > p.vocabulary-noun__translation {
+    background-color: $snow-1;
+    color: $night-1;
   }
 }

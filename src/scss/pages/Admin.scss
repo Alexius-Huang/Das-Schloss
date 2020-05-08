@@ -75,6 +75,9 @@ div.page__admin > section.lessons {
 
     div.lessons__markdown-editor-button-group {
       margin: 1rem 0;
+      > button {
+        margin-right: 1rem;
+      }
     }
   }
 

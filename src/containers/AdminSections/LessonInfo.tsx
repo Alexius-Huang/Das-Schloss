@@ -68,13 +68,27 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
 
           <h2 className="lessons__edit-lesson-content-header">Edit Lesson Content</h2>
           <div className="lessons__markdown-editor-button-group">
-            <button
+          <button
               className="button button-rect button-rect--sm button-rect--warning"
               onClick={(event) => {
                 event.preventDefault();
                 setContent(`${content}\n<Dialogue translation=""></Dialogue>`);
               }}
-            >Dialogue (Ctrl + D)</button>
+            >Dialogue</button>
+            <button
+              className="button button-rect button-rect--sm button-rect--warning"
+              onClick={(event) => {
+                event.preventDefault();
+                setContent(`${content}\n<Hint title=""></Hint>`);
+              }}
+            >Hint</button>
+            <button
+              className="button button-rect button-rect--sm button-rect--warning"
+              onClick={(event) => {
+                event.preventDefault();
+                setContent(`${content}\n<Noun translation="" gender="m" plural=""></Noun>`);
+              }}
+            >Noun</button>
           </div>
           
           <MarkdownField

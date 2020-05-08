@@ -1,7 +1,7 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx';
 import useOnce from '../hooks/useOnce';
-import { Dialogue } from '../components/Lesson';
+import { Dialogue, Hint, Noun } from '../components/Lesson';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLessonContentReset, fetchLessonContentStart } from '../redux.actions/lessons';
 import { useRouteMatch } from 'react-router-dom';
@@ -10,6 +10,8 @@ import '../scss/pages/Lesson.scss';
 
 const overrides = {
   Dialogue: { component: Dialogue },
+  Hint: { component: Hint },
+  Noun: { component: Noun },
 };
 
 const Lesson: React.FC = () => {
@@ -25,12 +27,12 @@ const Lesson: React.FC = () => {
 
   return (
     <div className="page page__lesson page--960">
-      <h1 className="lesson_header">{lessonContent?.lesson.title ?? 'Loading title of the lesson...'}</h1>
+      <h1 className="lesson__header">{lessonContent?.lesson.title ?? 'Loading title of the lesson...'}</h1>
 
       <div className="lesson__content">
         <Markdown options={{ overrides }}>
           {lessonContent?.content ?? 'Loading...'}
-        </Markdown> 
+        </Markdown>
       </div>
     </div>
   );
