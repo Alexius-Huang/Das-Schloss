@@ -29,12 +29,14 @@ export default function (app: express.Express, db: Knex) {
           model.lessonVocabularyNouns(id, { transacting: trx }),
           model.lessonVocabularyVerbs(id, { transacting: trx })
         ]);
-        
+
         const lessonContent: T.LessonContent & T.Vocabularies = {
           ...lessonContents[0],
           nouns,
           verbs,
         };
+
+        lessonContent.lesson = lessonContent.lesson[0];
         return lessonContent;
       });
       res.status(200).json(result);
@@ -86,21 +88,24 @@ export default function (app: express.Express, db: Knex) {
   app.put('/lesson/:id', async (req, res) => {
     try {
       const id = parseInt(req.params.id, 10);
-      const data: T.UpdateLesson & T.UpdateLessonContent = req.body;
-      const { content, ...updateLessonData } = data;
-      const updateLessonContentData = { content };
-
-      const result: T.Lesson = await db.transaction(async trx => {
-        const lessons: T.Lesson[] = await model.updateLesson(id, updateLessonData).transacting(trx);
-        const lesson = lessons[0];
-  
-        content !== undefined && await model.updateLessonContentFromLesson(id, updateLessonContentData).transacting(trx);
-        return lesson;
-      });
-  
+      const data: T.UpdateLesson = req.body;
+      const lessons: T.Lesson[] = await model.updateLesson(id, data);
+      const result: T.Lesson = lessons[0];
       res.status(200).json(result);
     } catch {
       res.status(400).json('Some error occurs on updating lesson...');
+    }
+  });
+
+  app.put('/lesson/:id/content', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      const data: T.UpdateLessonContent = req.body;
+      const lessonContents: T.LessonContent[] = await model.updateLessonContent(id, data);
+      const result: T.LessonContent = lessonContents[0];
+      res.status(200).json(result);
+    } catch {
+      res.status(400).json('Some error occurs on updating lesson\'s content...');
     }
   });
 }

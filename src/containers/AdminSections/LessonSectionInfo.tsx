@@ -14,6 +14,8 @@ const LessonSectionInfo: React.FC<LessonSectionInfoProps> = (props) => {
     setTitle(section.title);
   }, [section.title]);
 
+  /* TODO: update lesson section */
+
   return (
     <Fragment>
       <h2 className="lessons__header">Section Info</h2>

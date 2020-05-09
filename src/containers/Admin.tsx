@@ -53,7 +53,7 @@ const Admin: React.FC = () => {
       <p className="lessons__default-info">Please Select a Section</p>
     );
   } else if (lessonID !== undefined) {
-    renderLessons = <AdminSection.LessonInfo lesson={targetLesson} />;
+    renderLessons = <AdminSection.EditLesson lesson={targetLesson} />;
   } else {
     renderLessons = (
       <Fragment>

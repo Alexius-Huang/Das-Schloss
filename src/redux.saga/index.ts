@@ -2,7 +2,7 @@ import { all, takeLatest, put, call, select } from 'redux-saga/effects';
 import * as LessonAPI from '../api/lessons';
 import * as LessonActions from '../redux.actions/lessons';
 import * as UIActions from '../redux.actions/ui';
-import { LessonFetchState, NewSection, UpdateLesson, Lesson } from '../redux.reducers/lessons.type';
+import { LessonFetchState, NewSection, UpdateLesson, Lesson, LessonContent } from '../redux.reducers/lessons.type';
 import { selectLessonFetchState } from '../redux.selectors/Lessons';
 import { RootState } from '../redux.reducers';
 import { Modals } from '../redux.reducers/ui.type';
@@ -49,15 +49,28 @@ function* createLessonSectionTransaction() {
 function* updateLessonTransaction() {
   try {
     const params: UpdateLesson = yield select(
-      (state: RootState) => state.Lessons.updateLessonSection.params
+      (state: RootState) => state.Lessons.updateLesson.params
     );
     const response = yield call(LessonAPI.updateLesson, params);
     yield put(LessonActions.updateLessonSuccess(response));
 
     const updatedLesson: Lesson = yield select(
-      (state: RootState) => state.Lessons.updateLessonSection.instance
+      (state: RootState) => state.Lessons.updateLesson.instance
     );
     yield put(UIActions.openModal({ type: Modals.APISuccess, action: 'Update', name: updatedLesson.title }));
+  } catch (err) {
+    yield put(LessonActions.updateLessonError(err));
+  }
+}
+
+function* updateLessonContentTransaction() {
+  try {
+    const { params, lessonId } = yield select(
+      (state: RootState) => state.Lessons.updateLessonContent.params
+    );
+    const response = yield call(LessonAPI.updateLessonContent, lessonId, params);
+    yield put(LessonActions.updateLessonContentSuccess(response));
+    yield put(UIActions.openModal({ type: Modals.APISuccess, action: 'Update', name: 'Content' }));
   } catch (err) {
     yield put(LessonActions.updateLessonError(err));
   }
@@ -69,6 +82,7 @@ function* watchLessons() {
   yield takeLatest('FETCH_LESSON_CONTENT_START', fetchLessonContentTransaction);
   yield takeLatest('CREATE_LESSON_SECTION_START', createLessonSectionTransaction);
   yield takeLatest('UPDATE_LESSON_START', updateLessonTransaction);
+  yield takeLatest('UPDATE_LESSON_CONTENT_START', updateLessonContentTransaction);
 }
 
 export default function* () {

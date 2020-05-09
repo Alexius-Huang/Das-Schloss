@@ -23,12 +23,12 @@ export default function (db: Knex) {
     updateLesson(id: number, params: T.UpdateLesson) {
       return this.db.from('lessons').where({ id }).update(params).returning('*');
     },
+    updateLessonContent(lessonId: number, params: T.UpdateLessonContent) {
+      return this.db.from('lesson_contents').where({ lesson_id: lessonId }).update(params).returning('*');
+    },
     // updateLessonContent(id: number, params: T.UpdateLessonContent) {
     //   return this.db.from('lesson_contents').where({ id }).update(params).returning('*');
     // },
-    updateLessonContentFromLesson(id: number, params: T.UpdateLessonContent) {
-      return this.db.from('lesson_contents').where({ lesson_id: id }).update(params).returning('*');
-    },
     lessons(options?: Options) {
       return (options?.transacting ?? this.db).raw(`
         SELECT

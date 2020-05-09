@@ -14,7 +14,8 @@ const defaultState: T.LessonsState = {
   sections: [],
   fetchState: T.LessonFetchState.INCOMPLETE,
   createLessonSection: transaction<T.CreateLessonSectionTransaction>(),
-  updateLessonSection: transaction<T.UpdateLessonTransaction>(),
+  updateLesson: transaction<T.UpdateLessonTransaction>(),
+  updateLessonContent: transaction<T.UpdateLessonContentTransaction>(),
   fetchLessonContent: transaction<T.FetchLessonContentTransaction>(),
   error: null,
 
@@ -93,7 +94,7 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
     case 'UPDATE_LESSON_START':
       return {
         ...state,
-        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+        updateLesson: transaction<T.UpdateLessonTransaction>({
           state: T.APIState.PROCESSING,
           params: action.payload
         }),
@@ -110,7 +111,7 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
       return {
         ...state,
         sections,
-        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+        updateLesson: transaction<T.UpdateLessonTransaction>({
           state: T.APIState.STATIC,
           instance: lesson,
         }),
@@ -118,7 +119,32 @@ export default function (state = defaultState, action: LessonsAction): T.Lessons
     case 'UPDATE_LESSON_ERROR':
       return {
         ...state,
-        updateLessonSection: transaction<T.UpdateLessonTransaction>({
+        updateLesson: transaction<T.UpdateLessonTransaction>({
+          state: T.APIState.ERROR,
+          error: action.payload,
+        }),
+      };
+
+    case 'UPDATE_LESSON_CONTENT_START':
+      return {
+        ...state,
+        updateLessonContent: transaction<T.UpdateLessonContentTransaction>({
+          state: T.APIState.PROCESSING,
+          params: action.payload
+        }),
+      };
+    case 'UPDATE_LESSON_CONTENT_SUCCESS':
+      return {
+        ...state,
+        updateLessonContent: transaction<T.UpdateLessonContentTransaction>({
+          state: T.APIState.STATIC,
+          instance: action.payload
+        }),
+      };
+    case 'UPDATE_LESSON_CONTENT_ERROR':
+      return {
+        ...state,
+        updateLessonContent: transaction<T.UpdateLessonContentTransaction>({
           state: T.APIState.ERROR,
           error: action.payload,
         }),

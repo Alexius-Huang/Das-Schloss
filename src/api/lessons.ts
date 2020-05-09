@@ -1,4 +1,4 @@
-import { NewSection, UpdateSection, UpdateLesson } from "../redux.reducers/lessons.type";
+import { NewSection, UpdateSection, UpdateLesson, UpdateLessonContent } from "../redux.reducers/lessons.type";
 
 export function fetchAllLessons() {
   return fetch('/lessons')
@@ -31,5 +31,13 @@ export function updateLesson(params: UpdateLesson) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(params.params),
+  }).then(res => res.json());
+}
+
+export function updateLessonContent(lessonId: number, params: UpdateLessonContent) {
+  return fetch(`/lesson/${lessonId}/content`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
   }).then(res => res.json());
 }

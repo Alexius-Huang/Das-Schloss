@@ -25,6 +25,7 @@ const Form: React.FC<FormProps> = (props) => {
     case undefined:
     case 'normal':
       buttonStyleClass = 'button-rect--dark';
+      break;
     default:
       buttonStyleClass = `button-rect--${sbo?.style}`;
   }

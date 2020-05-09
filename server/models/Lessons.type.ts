@@ -36,7 +36,7 @@ export interface NewLessonContent {
   content?: string;
 }
 
-export type UpdateLessonContent = Partial<NewLessonContent>;
+export type UpdateLessonContent = { content: string };
 
 export interface LessonSection {
   id: number;

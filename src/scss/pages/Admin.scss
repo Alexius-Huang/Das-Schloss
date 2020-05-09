@@ -67,12 +67,7 @@ div.page__admin > section.lessons {
     margin-bottom: 2rem;
   }
 
-  > div.lessons__lesson-info {
-    h2.lessons__edit-lesson-content-header {
-      font-size: 1.8rem;
-      margin-top: 3rem;
-    }
-
+  > div.lessons__lesson-content {
     div.lessons__markdown-editor-button-group {
       margin: 1rem 0;
       > button {

@@ -1,4 +1,4 @@
-import { Section, NewSection, UpdateLesson, Lesson, LessonContent } from '../redux.reducers/lessons.type';
+import { Section, NewSection, UpdateLesson, Lesson, LessonContent, UpdateLessonContent } from '../redux.reducers/lessons.type';
 import * as A from './lessons.type';
 
 export function setSections(sections: Section[]): A.SetSections {
@@ -97,6 +97,27 @@ export function updateLessonSuccess(response: Lesson): A.UpdateLessonSuccess {
 export function updateLessonError(message: string): A.UpdateLessonError {
   return {
     type: 'UPDATE_LESSON_ERROR',
+    payload: message,
+  };
+}
+
+export function updateLessonContentStart(params: UpdateLessonContent): A.UpdateLessonContentStart {
+  return {
+    type: 'UPDATE_LESSON_CONTENT_START',
+    payload: params,
+  };
+}
+
+export function updateLessonContentSuccess(response: LessonContent): A.UpdateLessonContentSuccess {
+  return {
+    type: 'UPDATE_LESSON_CONTENT_SUCCESS',
+    payload: response,
+  };
+}
+
+export function updateLessonContentError(message: string): A.UpdateLessonContentError {
+  return {
+    type: 'UPDATE_LESSON_CONTENT_ERROR',
     payload: message,
   };
 }

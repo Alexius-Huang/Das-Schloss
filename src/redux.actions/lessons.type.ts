@@ -76,6 +76,21 @@ export interface UpdateLessonError {
   payload: string;
 }
 
+export interface UpdateLessonContentStart {
+  type: 'UPDATE_LESSON_CONTENT_START';
+  payload: T.UpdateLessonContent;
+}
+
+export interface UpdateLessonContentSuccess {
+  type: 'UPDATE_LESSON_CONTENT_SUCCESS';
+  payload: T.LessonContent;
+}
+
+export interface UpdateLessonContentError {
+  type: 'UPDATE_LESSON_CONTENT_ERROR';
+  payload: string;
+}
+
 export interface SelectLesson {
   type: 'SELECT_LESSON';
   payload: T.Lesson;
@@ -98,5 +113,8 @@ export type LessonsAction =
   UpdateLessonStart          |
   UpdateLessonSuccess        |
   UpdateLessonError          |
+  UpdateLessonContentStart   |
+  UpdateLessonContentSuccess |
+  UpdateLessonContentError   |
   SelectLesson
 ;

@@ -39,9 +39,14 @@ export type UpdateLesson = { id: number; params: Partial<NewLesson> };
 export type LessonContent = {
   content: string;
   lesson: Lesson;
+}
+
+export type LessonVocabulary = {
   nouns: Noun[];
   verbs: Verb[];
-}
+};
+
+export type UpdateLessonContent = { lessonId: number; params: { content: string; } };
 
 export type Section = {
   id: number;
@@ -66,10 +71,12 @@ interface APITransaction<Tinstance, Tparams = null, Terror = string> {
 
 export type CreateLessonSectionTransaction = APITransaction<Section, NewSection>;
 export type UpdateLessonTransaction = APITransaction<Lesson, UpdateLesson>;
+export type UpdateLessonContentTransaction = APITransaction<{ content: string }, UpdateLessonContent>;
 export type FetchLessonContentTransaction = APITransaction<LessonContent, { lessonId: number }>;
 export type LessonTransactions =
   CreateLessonSectionTransaction |
   UpdateLessonTransaction |
+  UpdateLessonContentTransaction |
   FetchLessonContentTransaction
 ;
 
@@ -77,7 +84,8 @@ export interface LessonsState {
   sections: Section[];
   fetchState: LessonFetchState;
   createLessonSection: CreateLessonSectionTransaction;
-  updateLessonSection: UpdateLessonTransaction;
+  updateLesson: UpdateLessonTransaction;
+  updateLessonContent: UpdateLessonContentTransaction;
   fetchLessonContent: FetchLessonContentTransaction;
   error: null | string;
 
