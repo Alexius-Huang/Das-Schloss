@@ -1,3 +1,5 @@
+import { Noun, Verb } from "./Vocabulary.type";
+
 export enum LessonType {
   Conversation = 'conversation',
   Vocabulary = 'vocabulary',
@@ -23,6 +25,11 @@ export interface LessonContent {
   id: number;
   content: string;
   lesson: Lesson;
+}
+
+export interface Vocabularies {
+  nouns: Noun[];
+  verbs: Verb[];
 }
 
 export interface NewLessonContent {

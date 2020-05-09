@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS lesson_vocabulary_nouns (
+  id SERIAL PRIMARY KEY,
+  lesson_id INTEGER REFERENCES lessons(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  noun_id INTEGER REFERENCES vocabulary_nouns(id) ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS lesson_vocabulary_verbs (
+  id SERIAL PRIMARY KEY,
+  lesson_id INTEGER REFERENCES lessons(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  verb_id INTEGER REFERENCES vocabulary_verbs(id) ON UPDATE CASCADE
+);

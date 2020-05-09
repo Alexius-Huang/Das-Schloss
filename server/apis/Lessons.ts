@@ -2,21 +2,14 @@ import express from 'express';
 import Knex from 'knex';
 import LessonsModel from '../models/Lessons';
 import * as T from '../models/Lessons.type';
+import { Noun, Verb } from '../models/Vocabulary.type';
 
 export default function (app: express.Express, db: Knex) {
   const model = LessonsModel(db);
 
   app.get('/lessons', async (req, res) => {
     try {
-      const lessons: T.LessonSection[] = await db.raw(`
-        SELECT
-          ls.id, ls.title, ls.icon, json_agg(lessons ORDER BY lessons.id ASC) AS lessons
-        FROM lesson_sections ls
-        INNER JOIN lessons ON lessons.lesson_section_id = ls.id
-        GROUP BY ls.id
-        ORDER BY ls.id ASC;
-      `).then(res => res.rows);
-  
+      const lessons: T.LessonSection[] = await model.lessons();
       res.status(200).json(lessons);
     } catch {
       res.status(400).json('Fetch lessons error...');
@@ -26,11 +19,26 @@ export default function (app: express.Express, db: Knex) {
   app.get('/lesson/:id/content', async (req, res) => {
     try {
       const id = parseInt(req.params.id, 10);
-      const lessonContents: T.LessonContent[] = await model.lessonContentFromLesson(id);
-      const result: T.LessonContent = lessonContents[0];
-      result.lesson = result.lesson[0];
-      res.status(200).json(lessonContents[0]);
-    } catch {
+      const result: T.LessonContent = await db.transaction(async trx => {
+        const [lessonContents, nouns, verbs]: [
+          T.LessonContent[],
+          Noun[],
+          Verb[]
+        ] = await Promise.all([
+          model.lessonContent(id, { transacting: trx }),
+          model.lessonVocabularyNouns(id, { transacting: trx }),
+          model.lessonVocabularyVerbs(id, { transacting: trx })
+        ]);
+        
+        const lessonContent: T.LessonContent & T.Vocabularies = {
+          ...lessonContents[0],
+          nouns,
+          verbs,
+        };
+        return lessonContent;
+      });
+      res.status(200).json(result);
+    } catch (err) {
       res.status(400).json('Fetch lesson content error...');
     }
   });

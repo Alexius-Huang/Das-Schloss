@@ -1,4 +1,5 @@
 import { AvailableIcons } from "../helpers/icons";
+import { Noun, Verb } from "./vocabulary.type";
 
 export enum LessonType {
   Conversation = 'conversation',
@@ -38,6 +39,8 @@ export type UpdateLesson = { id: number; params: Partial<NewLesson> };
 export type LessonContent = {
   content: string;
   lesson: Lesson;
+  nouns: Noun[];
+  verbs: Verb[];
 }
 
 export type Section = {

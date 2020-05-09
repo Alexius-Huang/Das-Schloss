@@ -4,6 +4,7 @@ import { Lesson, LessonType, NewLesson } from '../../redux.reducers/lessons.type
 import { useDispatch, useSelector } from 'react-redux';
 import { updateLessonStart, fetchLessonContentReset, fetchLessonContentStart } from '../../redux.actions/lessons';
 import { selectLessonContentFetchState } from '../../redux.selectors/Lessons';
+import { Noun, Verb } from '../../redux.reducers/vocabulary.type';
 import useOnce from '../../hooks/useOnce';
 import 'react-mde/lib/styles/css/react-mde-all.css';
 
@@ -18,6 +19,8 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
   const [title, setTitle] = useState(lesson.title);
   const [type, setType] = useState(lesson.type);
   const [content, setContent] = useState('Loading...');
+  const [nouns, setNouns] = useState<Noun[]>([]);
+  const [verbs, setVerbs] = useState<Verb[]>([]);
 
   useOnce(() => {
     dispatch(fetchLessonContentReset());
@@ -25,10 +28,15 @@ const LessonInfo: React.FC<LessonInfoProps> = (props) => {
   });
 
   useEffect(() => {
-    if (lessonContent.instance) {
-      setContent(lessonContent.instance.content);
+    const { instance: i } = lessonContent;
+    if (i) {
+      setContent(i.content);
+      setNouns(i.nouns);
+      setVerbs(i.verbs);
     }
   }, [lessonContent.instance]);
+
+  console.log(nouns, verbs);
 
   const handleSubmit = function(params: NewLesson) {
     dispatch(updateLessonStart({ id: lesson.id, params }));
