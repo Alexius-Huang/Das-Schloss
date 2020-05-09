@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import LessonInfo from './EditLesson.Info';
 import LessonContent from './EditLesson.Content';
+import LessonVocabulary from './EditLesson.Vocabulary';
 import * as T from '../../redux.reducers/lessons.type';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../redux.actions/lessons';
 import { selectLessonContentFetchState } from '../../redux.selectors/Lessons';
 import useOnce from '../../hooks/useOnce';
-// import { Noun, Verb } from '../../redux.reducers/vocabulary.type';
+import { Noun, Verb } from '../../redux.reducers/vocabulary.type';
 
 interface LessonInfoProps {
   lesson: T.Lesson;
@@ -17,8 +18,8 @@ const EditLesson: React.FC<LessonInfoProps> = (props) => {
   const dispatch = useDispatch();
   const lessonContent = useSelector(selectLessonContentFetchState);
   const [content, setContent] = useState('Loading...');
-  // const [nouns, setNouns] = useState<Noun[]>([]);
-  // const [verbs, setVerbs] = useState<Verb[]>([]);
+  const [nouns, setNouns] = useState<Noun[]>([]);
+  const [verbs, setVerbs] = useState<Verb[]>([]);
 
   useOnce(() => {
     dispatch(actions.fetchLessonContentReset());
@@ -29,12 +30,12 @@ const EditLesson: React.FC<LessonInfoProps> = (props) => {
     const { instance: i } = lessonContent;
     if (i) {
       setContent(i.content);
-      // setNouns(i.nouns);
-      // setVerbs(i.verbs);
+      setNouns(i.nouns);
+      setVerbs(i.verbs);
     }
   }, [lessonContent]);
 
-  // console.log(nouns, verbs);
+  console.log(nouns, verbs);
 
   const handleUpdateLesson = function(params: T.Lesson) {
     dispatch(actions.updateLessonStart({ id: lesson.id, params }));
@@ -55,6 +56,12 @@ const EditLesson: React.FC<LessonInfoProps> = (props) => {
         content={content}
         setContent={setContent}
         onSubmit={handleUpdateLessonContent}
+      />
+
+      <LessonVocabulary
+        nouns={nouns}
+        verbs={verbs}
+        onSubmit={console.log}
       />
     </Fragment>
   );

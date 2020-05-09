@@ -72,7 +72,7 @@ interface APITransaction<Tinstance, Tparams = null, Terror = string> {
 export type CreateLessonSectionTransaction = APITransaction<Section, NewSection>;
 export type UpdateLessonTransaction = APITransaction<Lesson, UpdateLesson>;
 export type UpdateLessonContentTransaction = APITransaction<{ content: string }, UpdateLessonContent>;
-export type FetchLessonContentTransaction = APITransaction<LessonContent, { lessonId: number }>;
+export type FetchLessonContentTransaction = APITransaction<LessonContent & LessonVocabulary, { lessonId: number }>;
 export type LessonTransactions =
   CreateLessonSectionTransaction |
   UpdateLessonTransaction |

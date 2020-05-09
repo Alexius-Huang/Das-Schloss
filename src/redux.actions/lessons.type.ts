@@ -34,7 +34,7 @@ export interface FetchLessonContentStart {
 
 export interface FetchLessonContentSuccess {
   type: 'FETCH_LESSON_CONTENT_SUCCESS';
-  payload: T.LessonContent;
+  payload: T.LessonContent & T.LessonVocabulary;
 }
 
 export interface FetchLessonContentError {

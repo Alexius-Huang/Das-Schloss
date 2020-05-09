@@ -1,4 +1,4 @@
-import { Section, NewSection, UpdateLesson, Lesson, LessonContent, UpdateLessonContent } from '../redux.reducers/lessons.type';
+import { Section, NewSection, UpdateLesson, Lesson, LessonContent, UpdateLessonContent, LessonVocabulary } from '../redux.reducers/lessons.type';
 import * as A from './lessons.type';
 
 export function setSections(sections: Section[]): A.SetSections {
@@ -41,7 +41,7 @@ export function fetchLessonContentStart(lessonId: number): A.FetchLessonContentS
   };
 }
 
-export function fetchLessonContentSuccess(response: LessonContent): A.FetchLessonContentSuccess {
+export function fetchLessonContentSuccess(response: LessonContent & LessonVocabulary): A.FetchLessonContentSuccess {
   return {
     type: 'FETCH_LESSON_CONTENT_SUCCESS',
     payload: response,

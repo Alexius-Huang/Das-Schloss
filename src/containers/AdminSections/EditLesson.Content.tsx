@@ -17,7 +17,7 @@ const LessonContent: React.FC<LessonContentProps> = ({ content, setContent, onSu
           name="update-lesson-content"
           onSubmit={onSubmit}
           submitButtonOption={{
-            content: 'Update Lesson',
+            content: 'Update Lesson Content',
             style: 'success'
           }}
         >
