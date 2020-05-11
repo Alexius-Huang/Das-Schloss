@@ -33,7 +33,7 @@ export default function (app: express.Express, db: Knex) {
         const lessonContent: T.LessonContent & T.Vocabularies = {
           ...lessonContents[0],
           nouns,
-          verbs,
+          verbs: verbs.map(v => ({ ...v, ipc: v.ipc[0] })),
         };
 
         lessonContent.lesson = lessonContent.lesson[0];

@@ -97,10 +97,15 @@ div.hint {
 }
 
 div.vocabulary-noun {
+  + div.vocabulary-noun {
+    margin-top: 1rem;
+  }
+
   > p.vocabulary-noun__value {
     border-top-left-radius: .2rem;
     border-top-right-radius: .2rem;
     padding: .5rem 1rem;
+    font-weight: bolder;
   }
   > p.vocabulary-noun__translation {
     border-bottom-left-radius: .2rem;
@@ -120,5 +125,43 @@ div.vocabulary-noun {
   > p.vocabulary-noun__translation {
     background-color: $snow-1;
     color: $night-1;
+  }
+}
+
+div.vocabulary-verb {
+  + div.vocabulary-verb {
+    margin-top: 1rem;
+  }
+
+  > p.vocabulary-verb__value {
+    background-color: $frost-4;
+    color: $snow-1;
+    padding: .5rem 1rem;
+
+    > span.vocabulary-verb__translation {
+      font-size: 1.4rem;
+      margin-left: .5rem;
+    }
+  }
+
+  > div.vocabulary-verb__ipc {
+    background-color: $snow-1;
+    color: $night-1;
+    font-size: 0;
+    > div.vocabulary-verb__ipc-singular,
+    > div.vocabulary-verb__ipc-plural {
+      display: inline-block;
+      width: 50%;
+      > p {
+        padding: .5rem 1rem;
+        font-size: 1.6rem;
+        + p {
+          padding-top: 0;
+        }
+      }
+      > p > span.vocabulary-verb__ipc-form {
+        font-weight: bolder;
+      }
+    }
   }
 }

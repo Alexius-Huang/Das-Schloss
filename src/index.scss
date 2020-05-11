@@ -51,6 +51,10 @@ li {
   color: $snow-1;
 }
 
+.hide {
+  display: none;
+}
+
 @media screen and (max-width: 765px) {
   html {
     font-size: 50%;

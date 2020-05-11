@@ -32,7 +32,7 @@ export default function (app: express.Express, db: Knex) {
 
         const result2: T.IndicativePresentConjugation[] = await model.createIPC(IPC, createdVerb).transacting(trx);
         const createdIPC: T.IndicativePresentConjugation = { ...result2[0] };
-        createdVerb.IPC = createdIPC;
+        createdVerb.ipc = createdIPC;
 
         return createdVerb;
       });

@@ -28,7 +28,7 @@ export interface Verb {
   name: string;
   translation: string;
   info: string;
-  IPC: IndicativePresentConjugation;
+  ipc: IndicativePresentConjugation;
 }
 
 export interface NewVerb {
